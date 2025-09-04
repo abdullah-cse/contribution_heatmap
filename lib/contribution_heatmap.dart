@@ -1,9 +1,4 @@
-/// Contribution Heatmap - A high-performance GitHub-like heatmap widget for Flutter.
-///
-/// Import this file only:
-/// ```dart
-/// import 'package:contribution_heatmap/contribution_heatmap.dart';
-/// ```
+/// ContributionHeatmap - A high-performance GitHub-like heatmap widget for Flutter.
 
 library;
 

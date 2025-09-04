@@ -1,0 +1,16 @@
+name: contribution_heatmap_example
+description: An example app that you can use to explore the contribution_heatmap package!
+
+publish_to: 'none'
+
+version: 1.0.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  contribution_heatmap:
+    path: ../
