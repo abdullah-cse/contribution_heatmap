@@ -2,6 +2,9 @@
 
 A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph.
 
+![Heatmap](https://raw.githubusercontent.com/abdullah-cse/contribution_heatmap/main/example/heatmap_macos.png)
+
+
 ## ✨ Features
 
 - **🚀 Ultra-High Performance**: Custom RenderBox implementation with optimized rendering pipeline
