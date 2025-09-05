@@ -1,8 +1,11 @@
+## 0.0.3
+
+- Add Topics for visibility.
+
 ## 0.0.2
 
-- Fix: Format code with dart format
+- Fix: Format code with dart format (#2)
 - Better Readme
-
 
 ## 0.0.1
 
