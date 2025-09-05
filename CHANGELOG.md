@@ -1,3 +1,9 @@
+## 0.0.2
+
+- Fix: Format code with dart format
+- Better Readme
+
+
 ## 0.0.1
 
 - Initial release

@@ -13,7 +13,10 @@ void main() {
     });
 
     test('should throw assertion if count is negative', () {
-      expect(() => ContributionEntry(DateTime.now(), -1), throwsA(isA<AssertionError>()));
+      expect(
+        () => ContributionEntry(DateTime.now(), -1),
+        throwsA(isA<AssertionError>()),
+      );
     });
 
     test('equality works with same date and count', () {

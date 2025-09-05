@@ -70,9 +70,7 @@ class HeatmapUtils {
     // Calculate rotation to put startWeekday at index 0
     final rotateBy = startWeekday - DateTime.monday; // 0-6
 
-    return [
-      for (int i = 0; i < 7; i++) allNames[(i + rotateBy) % 7],
-    ];
+    return [for (int i = 0; i < 7; i++) allNames[(i + rotateBy) % 7]];
   }
 
   /// Returns abbreviated month name for the given month number.

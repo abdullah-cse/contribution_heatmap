@@ -1,9 +1,8 @@
-# Contribution Heatmap 🔥
+# Contribution Heatmap
 
 A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph.
 
-![Heatmap](https://raw.githubusercontent.com/abdullah-cse/contribution_heatmap/main/example/heatmap_macos.png)
-
+![Heatmap Calendar](/example/heatmap_macos.png)
 
 ## ✨ Features
 
@@ -15,13 +14,6 @@ A high-performance, GitHub-like contribution heatmap widget for Flutter. This wi
 - **💾 Memory Efficient**: Optimized data structures minimize memory usage and GC pressure
 - **🔧 Smart Invalidation**: Only recomputes what's needed, not on every frame
 
-## 📱 Demo
-
-The heatmap displays contribution data as a grid where:
-- Each column represents a week
-- Each row represents a day of the week  
-- Cell colors indicate contribution intensity
-- Interactive cells show detailed information on tap
 
 ## 🚀 Quick Start
 
@@ -110,35 +102,13 @@ ContributionHeatmap(
 
 ### ContributionEntry
 
-The basic data structure for contribution data:
+The Data structure for contribution data:
 
 ```dart
 class ContributionEntry {
   final DateTime date;  // Day-level precision
   final int count;      // Number of contributions (>= 0)
-  
   const ContributionEntry(this.date, this.count);
-}
-```
-
-**Example data generation:**
-
-```dart
-List<ContributionEntry> generateSampleData() {
-  final data = <ContributionEntry>[];
-  final now = DateTime.now();
-  
-  // Generate data for the past year
-  for (int i = 0; i < 365; i++) {
-    final date = now.subtract(Duration(days: i));
-    final contributions = Random().nextInt(20); // 0-19 contributions
-    
-    if (contributions > 0) {
-      data.add(ContributionEntry(date, contributions));
-    }
-  }
-  
-  return data;
 }
 ```
 
@@ -177,16 +147,6 @@ List<ContributionEntry> generateSampleData() {
 | `colorScale` | `Color Function(int)?` | `null` | Custom color mapping function |
 | `onCellTap` | `void Function(DateTime, int)?` | `null` | Callback for cell tap events |
 
-## 🎯 Default Color Scale
-
-The widget uses a GitHub-inspired 5-level color scale by default:
-
-- **0 contributions**: Light gray (`#E5EDEB`)
-- **1-2 contributions**: Light green (`#C6E48B`)
-- **3-5 contributions**: Medium green (`#7BC96F`)
-- **6-10 contributions**: Dark green (`#239A3B`)
-- **11+ contributions**: Darkest green (`#196127`)
-
 
 ## ⚡ Performance Characteristics
 
@@ -208,68 +168,6 @@ The widget uses a GitHub-inspired 5-level color scale by default:
 - **Responsive layout** adapts to available space
 - **Smooth interactions** even with large datasets
 
-## 🛠️ Technical Implementation
-
-### Custom RenderBox
-
-The widget uses Flutter's low-level rendering system for maximum performance:
-
-```dart
-class RenderContributionHeatmap extends RenderBox {
-  // Efficient layout calculation
-  @override
-  void performLayout() { ... }
-  
-  // Optimized painting with minimal allocations
-  @override
-  void paint(PaintingContext context, Offset offset) { ... }
-  
-  // Smart hit testing for interactions
-  @override
-  bool hitTestSelf(Offset position) => true;
-}
-```
-
-### Smart Invalidation
-
-The render object only recomputes what's necessary:
-
-- **Layout changes**: Cell size, spacing, padding modifications
-- **Paint changes**: Color scale, radius modifications  
-- **Data changes**: Entry list modifications trigger index rebuild
-
-### Gesture Handling
-
-Proper lifecycle management prevents memory leaks:
-
-```dart
-void _initRecognizers() {
-  _tap?.dispose(); // Clean up existing recognizer
-  _tap = TapGestureRecognizer(debugOwner: this)
-    ..onTapUp = _handleTapUp;
-}
-
-@override
-void detach() {
-  _tap?.dispose(); // Prevent memory leaks
-  super.detach();
-}
-```
-
-## 🧪 Testing
-
-Run the example app to see the widget in action:
-
-```bash
-flutter run
-```
-
-The example demonstrates:
-- Sample data generation
-- Interactive cell tapping
-- GitHub-style dark theme
-- Feature highlights and documentation
-
 ## 📝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
@@ -277,9 +175,3 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 ## 📄 License
 
 This project is licensed under the BSD 3-Clause License - see the LICENSE file for details.
-
-## 👍 Acknowledgments
-
-- Inspired by GitHub's contribution graph
-- Built with Flutter's powerful custom rendering system
-- Optimized for performance and accessibility

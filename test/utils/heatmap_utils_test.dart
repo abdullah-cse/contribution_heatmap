@@ -24,13 +24,26 @@ void main() {
     test('alignToWeekEnd works for Monday', () {
       final wednesday = DateTime(2024, 1, 17);
       final weekEnd = HeatmapUtils.alignToWeekEnd(wednesday, DateTime.monday);
-      expect(weekEnd.difference(HeatmapUtils.alignToWeekStart(wednesday, DateTime.monday)).inDays, 6);
+      expect(
+        weekEnd
+            .difference(
+              HeatmapUtils.alignToWeekStart(wednesday, DateTime.monday),
+            )
+            .inDays,
+        6,
+      );
     });
 
     test('weekdayShortNames rotates correctly', () {
-      final namesMon = HeatmapUtils.weekdayShortNames(const Locale('en'), DateTime.monday);
+      final namesMon = HeatmapUtils.weekdayShortNames(
+        const Locale('en'),
+        DateTime.monday,
+      );
       expect(namesMon.first, 'Mon');
-      final namesSun = HeatmapUtils.weekdayShortNames(const Locale('en'), DateTime.sunday);
+      final namesSun = HeatmapUtils.weekdayShortNames(
+        const Locale('en'),
+        DateTime.sunday,
+      );
       expect(namesSun.first, 'Sun');
       expect(namesSun.length, 7);
     });

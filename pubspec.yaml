@@ -1,7 +1,7 @@
 name: contribution_heatmap
 description: "A high-performance, GitHub-like contribution heatmap widget for Flutter. Built with a custom RenderBox for maximum efficiency, full customization, and interactive tap support."
 
-version: 0.0.1
+version: 0.0.2
 
 homepage: https://github.com/abdullah-cse/contribution_heatmap
 repository: https://github.com/abdullah-cse/contribution_heatmap

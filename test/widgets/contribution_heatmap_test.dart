@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:contribution_heatmap/contribution_heatmap.dart';
 
 void main() {
-  testWidgets('ContributionHeatmap renders cells and handles tap', (tester) async {
+  testWidgets('ContributionHeatmap renders cells and handles tap', (
+    tester,
+  ) async {
     final tapped = <DateTime, int>{};
     await tester.pumpWidget(
       MaterialApp(
@@ -33,9 +35,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: ContributionHeatmap(
-          entries: [
-            ContributionEntry(DateTime(2024, 1, 1), 5),
-          ],
+          entries: [ContributionEntry(DateTime(2024, 1, 1), 5)],
           colorScale: (v) => Colors.purple,
         ),
       ),
@@ -47,9 +47,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: ContributionHeatmap(
-          entries: [
-            ContributionEntry(DateTime(2024, 1, 10), 1),
-          ],
+          entries: [ContributionEntry(DateTime(2024, 1, 10), 1)],
           minDate: DateTime(2024, 1, 1),
           maxDate: DateTime(2024, 1, 31),
         ),

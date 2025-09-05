@@ -5,19 +5,19 @@ import '../models/contribution_entry.dart';
 import '../utils/heatmap_utils.dart';
 
 /// Custom RenderBox implementation for high-performance contribution heatmap rendering.
-/// 
+///
 /// This class handles all the low-level rendering logic including:
 /// - Layout calculations for the grid and labels
 /// - Efficient painting of cells and text
 /// - Hit testing for tap interactions
 /// - Memory-efficient data management
-/// 
+///
 /// The render object uses a custom layout algorithm optimized for
 /// the heatmap's grid structure, minimizing recomputations and
 /// providing smooth interaction even with large datasets.
 class RenderContributionHeatmap extends RenderBox {
   /// Creates a new render object for the contribution heatmap.
-  /// 
+  ///
   /// All parameters are required and define the visual and behavioral
   /// characteristics of the heatmap.
   RenderContributionHeatmap({
@@ -37,28 +37,28 @@ class RenderContributionHeatmap extends RenderBox {
     void Function(DateTime date, int value)? onCellTap,
     required TextScaler textScaler,
     required Locale locale,
-  })  : _entries = entries,
-        _minDate = minDate,
-        _maxDate = maxDate,
-        _cellSize = cellSize,
-        _cellSpacing = cellSpacing,
-        _cellRadius = cellRadius,
-        _padding = padding,
-        _showMonthLabels = showMonthLabels,
-        _showWeekdayLabels = showWeekdayLabels,
-        _monthTextStyle = monthTextStyle,
-        _weekdayTextStyle = weekdayTextStyle,
-        _startWeekday = startWeekday,
-        _colorScale = colorScale,
-        _onCellTap = onCellTap,
-        _textScaler = textScaler,
-        _locale = locale {
+  }) : _entries = entries,
+       _minDate = minDate,
+       _maxDate = maxDate,
+       _cellSize = cellSize,
+       _cellSpacing = cellSpacing,
+       _cellRadius = cellRadius,
+       _padding = padding,
+       _showMonthLabels = showMonthLabels,
+       _showWeekdayLabels = showWeekdayLabels,
+       _monthTextStyle = monthTextStyle,
+       _weekdayTextStyle = weekdayTextStyle,
+       _startWeekday = startWeekday,
+       _colorScale = colorScale,
+       _onCellTap = onCellTap,
+       _textScaler = textScaler,
+       _locale = locale {
     _rebuildIndex();
     _initRecognizers();
   }
 
   // --- Public Properties with Smart Invalidation ---
-  
+
   /// List of contribution entries to display.
   /// Setting this triggers a complete data rebuild and layout.
   List<ContributionEntry> _entries;
@@ -213,45 +213,45 @@ class RenderContributionHeatmap extends RenderBox {
   }
 
   // --- Internal State Management ---
-  
+
   /// Fast lookup map from normalized dates to contribution values.
   /// Uses midnight UTC dates as keys for consistent comparison.
   late Map<DateTime, int> _valueByDate;
-  
+
   /// First day of the aligned date range (start of the first week).
   late DateTime _firstDayAligned;
-  
-  /// Last day of the aligned date range (end of the last week).  
+
+  /// Last day of the aligned date range (end of the last week).
   late DateTime _lastDayAligned;
-  
+
   /// Total number of week columns in the grid.
   int _weeks = 0;
 
   // --- Layout Helper Variables ---
-  
+
   /// Width required for weekday labels (calculated during layout).
   late double _leftLabelWidth;
-  
+
   /// Height required for month labels (calculated during layout).
   late double _topLabelHeight;
 
   // --- Gesture Recognition ---
-  
+
   /// Tap gesture recognizer for handling cell interactions.
   TapGestureRecognizer? _tap;
 
   /// Initialize gesture recognizers for user interaction.
-  /// 
+  ///
   /// Sets up tap detection with proper cleanup to prevent memory leaks.
   void _initRecognizers() {
     _tap?.dispose(); // Clean up any existing recognizer
     _tap = TapGestureRecognizer(debugOwner: this)
       ..onTapUp = (details) {
         if (_onCellTap == null) return;
-        
+
         // Convert global tap position to local coordinates
         final local = globalToLocal(details.globalPosition);
-        
+
         // Determine which cell (if any) was tapped
         final tappedDate = _hitTestCell(local);
         if (tappedDate != null) {
@@ -269,53 +269,58 @@ class RenderContributionHeatmap extends RenderBox {
   }
 
   /// Rebuilds the internal date->value lookup index.
-  /// 
+  ///
   /// This is called whenever the entries list changes.
   /// Creates a fast HashMap for O(1) value lookups during painting.
   void _rebuildIndex() {
     _valueByDate = {
-      for (final entry in _entries) 
+      for (final entry in _entries)
         HeatmapUtils.dayKey(entry.date): entry.count,
     };
     _recomputeRange();
   }
 
   /// Recomputes the aligned date range for the heatmap grid.
-  /// 
+  ///
   /// Determines the first and last dates to display, aligned to week boundaries.
   /// If no explicit date range is provided, derives it from the entry data.
   void _recomputeRange() {
     // Handle empty data case - show the last year
     if (_entries.isEmpty && _minDate == null && _maxDate == null) {
       final today = DateTime.now();
-      final startDate = HeatmapUtils.dayKey(today)
-          .subtract(const Duration(days: 7 * 52 - 1)); // ~1 year ago
+      final startDate = HeatmapUtils.dayKey(
+        today,
+      ).subtract(const Duration(days: 7 * 52 - 1)); // ~1 year ago
       _setAlignedRange(startDate, today);
       return;
     }
 
     // Determine the actual date range from data or explicit parameters
-    DateTime minDate = _minDate ?? 
-        _entries.map((e) => HeatmapUtils.dayKey(e.date))
-               .reduce((a, b) => a.isBefore(b) ? a : b);
-    
-    DateTime maxDate = _maxDate ?? 
-        _entries.map((e) => HeatmapUtils.dayKey(e.date))
-               .reduce((a, b) => a.isAfter(b) ? a : b);
-    
+    DateTime minDate =
+        _minDate ??
+        _entries
+            .map((e) => HeatmapUtils.dayKey(e.date))
+            .reduce((a, b) => a.isBefore(b) ? a : b);
+
+    DateTime maxDate =
+        _maxDate ??
+        _entries
+            .map((e) => HeatmapUtils.dayKey(e.date))
+            .reduce((a, b) => a.isAfter(b) ? a : b);
+
     _setAlignedRange(minDate, maxDate);
   }
 
   /// Sets the aligned date range and calculates the number of week columns.
-  /// 
+  ///
   /// [minDate] - The earliest date to include
   /// [maxDate] - The latest date to include
-  /// 
+  ///
   /// Both dates are aligned to week boundaries based on [_startWeekday].
   void _setAlignedRange(DateTime minDate, DateTime maxDate) {
     _firstDayAligned = HeatmapUtils.alignToWeekStart(minDate, _startWeekday);
     _lastDayAligned = HeatmapUtils.alignToWeekEnd(maxDate, _startWeekday);
-    
+
     // Calculate number of complete weeks needed
     final totalDays = _lastDayAligned.difference(_firstDayAligned).inDays + 1;
     _weeks = (totalDays / 7).ceil();
@@ -330,7 +335,8 @@ class RenderContributionHeatmap extends RenderBox {
     _topLabelHeight = _showMonthLabels ? _measureMonthLabelHeight() : 0;
 
     // Calculate grid dimensions
-    final gridWidth = _weeks * _cellSize + math.max(0, _weeks - 1) * _cellSpacing;
+    final gridWidth =
+        _weeks * _cellSize + math.max(0, _weeks - 1) * _cellSpacing;
     final gridHeight = 7 * _cellSize + 6 * _cellSpacing; // Always 7 rows
 
     // Calculate total widget size
@@ -344,7 +350,7 @@ class RenderContributionHeatmap extends RenderBox {
   }
 
   /// Measures the height needed for month labels.
-  /// 
+  ///
   /// Uses a sample text to determine the required vertical space.
   double _measureMonthLabelHeight() {
     final textPainter = TextPainter(
@@ -353,17 +359,17 @@ class RenderContributionHeatmap extends RenderBox {
       textScaler: _textScaler,
       locale: _locale,
     )..layout();
-    
+
     return textPainter.height + 6; // Text height + gap below labels
   }
 
   /// Measures the width needed for weekday labels.
-  /// 
+  ///
   /// Calculates the maximum width needed for any weekday abbreviation.
   double _measureWeekdayLabelsWidth() {
     final weekdayNames = HeatmapUtils.weekdayShortNames(_locale, _startWeekday);
     double maxWidth = 0;
-    
+
     for (final name in weekdayNames) {
       final textPainter = TextPainter(
         text: TextSpan(text: name, style: _weekdayTextStyle),
@@ -371,10 +377,10 @@ class RenderContributionHeatmap extends RenderBox {
         textScaler: _textScaler,
         locale: _locale,
       )..layout();
-      
+
       maxWidth = math.max(maxWidth, textPainter.width);
     }
-    
+
     return maxWidth + 8; // Max text width + gap to the right
   }
 
@@ -383,12 +389,11 @@ class RenderContributionHeatmap extends RenderBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     final canvas = context.canvas;
-    
+
     // Calculate the origin point for the contribution grid
-    final gridOrigin = offset + Offset(
-      _padding.left + _leftLabelWidth, 
-      _padding.top + _topLabelHeight
-    );
+    final gridOrigin =
+        offset +
+        Offset(_padding.left + _leftLabelWidth, _padding.top + _topLabelHeight);
 
     // Paint weekday labels on the left side
     if (_showWeekdayLabels) {
@@ -405,9 +410,13 @@ class RenderContributionHeatmap extends RenderBox {
   }
 
   /// Paints weekday labels along the left edge of the heatmap.
-  void _paintWeekdayLabels(Canvas canvas, Offset widgetOffset, Offset gridOrigin) {
+  void _paintWeekdayLabels(
+    Canvas canvas,
+    Offset widgetOffset,
+    Offset gridOrigin,
+  ) {
     final weekdayNames = HeatmapUtils.weekdayShortNames(_locale, _startWeekday);
-    
+
     for (int row = 0; row < 7; row++) {
       final name = weekdayNames[row];
       final textPainter = TextPainter(
@@ -418,19 +427,29 @@ class RenderContributionHeatmap extends RenderBox {
       )..layout(maxWidth: _leftLabelWidth - 2);
 
       // Center the label vertically with its corresponding row
-      final labelY = gridOrigin.dy + row * (_cellSize + _cellSpacing) + 
-                    (_cellSize - textPainter.height) / 2;
-      
+      final labelY =
+          gridOrigin.dy +
+          row * (_cellSize + _cellSpacing) +
+          (_cellSize - textPainter.height) / 2;
+
       // Right-align the text in the available space
-      final labelX = widgetOffset.dx + _padding.left + _leftLabelWidth - 
-                     textPainter.width - 4;
+      final labelX =
+          widgetOffset.dx +
+          _padding.left +
+          _leftLabelWidth -
+          textPainter.width -
+          4;
 
       textPainter.paint(canvas, Offset(labelX, labelY));
     }
   }
 
   /// Paints month labels along the top edge of the heatmap.
-  void _paintMonthLabels(Canvas canvas, Offset widgetOffset, Offset gridOrigin) {
+  void _paintMonthLabels(
+    Canvas canvas,
+    Offset widgetOffset,
+    Offset gridOrigin,
+  ) {
     DateTime cursor = _firstDayAligned;
     int weekIndex = 0;
     int? lastLabeledMonth;
@@ -438,11 +457,12 @@ class RenderContributionHeatmap extends RenderBox {
     // Iterate through each week column
     while (!cursor.isAfter(_lastDayAligned)) {
       final month = cursor.month;
-      
+
       // Show label if this is the first week containing a new month
-      final shouldShowLabel = lastLabeledMonth != month && 
-                             HeatmapUtils.isFirstWeekdayOfMonth(cursor);
-      
+      final shouldShowLabel =
+          lastLabeledMonth != month &&
+          HeatmapUtils.isFirstWeekdayOfMonth(cursor);
+
       if (shouldShowLabel) {
         final label = HeatmapUtils.monthAbbreviation(month);
         final textPainter = TextPainter(
@@ -458,7 +478,7 @@ class RenderContributionHeatmap extends RenderBox {
         textPainter.paint(canvas, Offset(labelX, labelY));
         lastLabeledMonth = month;
       }
-      
+
       cursor = cursor.add(const Duration(days: 7)); // Move to next week
       weekIndex++;
     }
@@ -468,8 +488,8 @@ class RenderContributionHeatmap extends RenderBox {
   void _paintContributionCells(Canvas canvas, Offset gridOrigin) {
     // Prepare reusable objects for efficient painting
     final roundedRect = RRect.fromRectAndRadius(
-      Rect.zero, 
-      Radius.circular(_cellRadius)
+      Rect.zero,
+      Radius.circular(_cellRadius),
     );
     final paint = Paint();
 
@@ -477,7 +497,7 @@ class RenderContributionHeatmap extends RenderBox {
     for (int week = 0; week < _weeks; week++) {
       for (int row = 0; row < 7; row++) {
         final date = _dateForCell(week, row);
-        
+
         // Skip cells outside the valid date range
         if (date.isBefore(_firstDayAligned) || date.isAfter(_lastDayAligned)) {
           continue;
@@ -485,8 +505,8 @@ class RenderContributionHeatmap extends RenderBox {
 
         // Get contribution value and determine color
         final value = _valueByDate[date] ?? 0;
-        paint.color = _colorScale?.call(value) ?? 
-                     HeatmapUtils.defaultColorScale(value);
+        paint.color =
+            _colorScale?.call(value) ?? HeatmapUtils.defaultColorScale(value);
 
         // Calculate cell position
         final cellX = gridOrigin.dx + week * (_cellSize + _cellSpacing);
@@ -496,7 +516,7 @@ class RenderContributionHeatmap extends RenderBox {
         // Draw the rounded rectangle cell
         canvas.drawRRect(
           roundedRect.shift(cellRect.topLeft).scaleRRect(_cellSize, _cellSize),
-          paint
+          paint,
         );
       }
     }
@@ -515,20 +535,20 @@ class RenderContributionHeatmap extends RenderBox {
   }
 
   /// Maps a local screen coordinate to a date (if it hits a valid cell).
-  /// 
+  ///
   /// [localPosition] - Position relative to this widget's top-left corner
-  /// 
+  ///
   /// Returns the date corresponding to the tapped cell, or null if the
   /// position doesn't correspond to a valid cell.
   DateTime? _hitTestCell(Offset localPosition) {
     // Calculate grid boundaries
     final gridLeft = _padding.left + _leftLabelWidth;
     final gridTop = _padding.top + _topLabelHeight;
-    
+
     // Convert to grid-relative coordinates
     final gridX = localPosition.dx - gridLeft;
     final gridY = localPosition.dy - gridTop;
-    
+
     // Check if position is within grid bounds
     if (gridX < 0 || gridY < 0) return null;
 
@@ -539,7 +559,7 @@ class RenderContributionHeatmap extends RenderBox {
     // Determine which grid cell was tapped
     final week = gridX ~/ cellWithSpacingWidth;
     final row = gridY ~/ cellWithSpacingHeight;
-    
+
     // Validate grid coordinates
     if (week < 0 || week >= _weeks || row < 0 || row >= 7) return null;
 
@@ -550,20 +570,20 @@ class RenderContributionHeatmap extends RenderBox {
 
     // Calculate the date for this cell
     final date = _dateForCell(week, row);
-    
+
     // Ensure date is within valid range
     if (date.isBefore(_firstDayAligned) || date.isAfter(_lastDayAligned)) {
       return null;
     }
-    
+
     return date;
   }
 
   /// Computes the date represented by a specific grid cell.
-  /// 
+  ///
   /// [week] - Column index (0 to _weeks-1)
   /// [row] - Row index (0 to 6, representing days of the week)
-  /// 
+  ///
   /// Returns the date corresponding to the specified grid position.
   DateTime _dateForCell(int week, int row) {
     return _firstDayAligned.add(Duration(days: week * 7 + row));

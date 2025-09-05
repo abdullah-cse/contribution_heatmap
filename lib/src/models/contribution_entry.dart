@@ -12,10 +12,8 @@ class ContributionEntry {
   /// Should be >= 0. Higher values will be rendered with darker colors.
   final int count;
 
-  const ContributionEntry(
-    this.date,
-    this.count,
-  ) : assert(count >= 0, 'ContributionEntry\'s Count must be non-negative');
+  const ContributionEntry(this.date, this.count)
+    : assert(count >= 0, 'ContributionEntry\'s Count must be non-negative');
 
   @override
   String toString() =>
