@@ -1,7 +1,13 @@
 # Contribution Heatmap
+![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/abdullahPDB)
+![GitHub License](https://img.shields.io/github/license/abdullah-cse/contribution_heatmap)
+![Stars](https://github.com/abdullah-cse/contribution_heatmap/stargazers)
+![GitHub repo size](https://img.shields.io/github/repo-size/abdullah-cse/contribution_heatmap)
+![Pub Monthly Downloads](https://img.shields.io/pub/dm/contribution_heatmap)
 
 A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph.
 
+![Contribution Heatmap Rounded Cell](/example/heatmap_macos_rounded.png)
 ![Contribution Heatmap](/example/heatmap_macos.png)
 
 ## ✨ Features

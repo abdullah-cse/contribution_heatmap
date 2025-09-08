@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../models/contribution_entry.dart';
 import '../rendering/render_contribution_heatmap.dart';
 
@@ -8,8 +8,8 @@ import '../rendering/render_contribution_heatmap.dart';
 /// ```dart
 /// ContributionHeatmap(
 ///   entries: [
-///     ContributionEntry(DateTime(2024, 1, 15), 5),
-///     ContributionEntry(DateTime(2024, 1, 16), 3),
+///     ContributionEntry(DateTime(2025, 9, 5), 5),
+///     ContributionEntry(DateTime(2025, 9, 6), 3),
 ///     // ... more entries
 ///   ],
 ///   onCellTap: (date, value) {
