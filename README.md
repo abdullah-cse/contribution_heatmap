@@ -1,7 +1,6 @@
 # Contribution Heatmap
 ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/abdullahPDB)
 ![GitHub License](https://img.shields.io/github/license/abdullah-cse/contribution_heatmap)
-![Stars](https://github.com/abdullah-cse/contribution_heatmap/stargazers)
 ![GitHub repo size](https://img.shields.io/github/repo-size/abdullah-cse/contribution_heatmap)
 ![Pub Monthly Downloads](https://img.shields.io/pub/dm/contribution_heatmap)
 
