@@ -1,9 +1,8 @@
 name: contribution_heatmap
-description: "A high-performance, GitHub-like contribution heatmap calendar widget for Flutter. Built with a custom RenderBox for maximum efficiency, full customization, and interactive tap support."
+description: "A high-performance, GitHub-like contribution heatmap calendar widget for Flutter. Built with a custom RenderBox for maximum efficiency and full customization."
 
-version: 0.0.4
+version: 0.0.5
 
-homepage: https://github.com/abdullah-cse/contribution_heatmap
 repository: https://github.com/abdullah-cse/contribution_heatmap
 issue_tracker: https://github.com/abdullah-cse/contribution_heatmap/issues
 

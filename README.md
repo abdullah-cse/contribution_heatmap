@@ -1,8 +1,9 @@
 # Contribution Heatmap
-![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/abdullahPDB)
-![GitHub License](https://img.shields.io/github/license/abdullah-cse/contribution_heatmap)
-![GitHub repo size](https://img.shields.io/github/repo-size/abdullah-cse/contribution_heatmap)
-![Pub Monthly Downloads](https://img.shields.io/pub/dm/contribution_heatmap)
+
+[![License: BSD-3-Clause](https://badgen.net/pub/license/contribution_heatmap)](https://opensource.org/licenses/BSD-3-Clause) [![Pub Version](https://badgen.net/pub/v/contribution_heatmap)](https://pub.dev/packages/contribution_heatmap/versions) [![Pub Likes](https://badgen.net/pub/likes/contribution_heatmap)](https://pub.dev/packages/contribution_heatmap/score) [![Pub Monthly Downloads](https://badgen.net/pub/dm/contribution_heatmap?color=purple)](https://pub.dev/packages/contribution_heatmap/score)
+[![Github Stars](https://badgen.net/github/stars/abdullah-cse/contribution_heatmap?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/stargazers) [![Github Open Isssues](https://badgen.net/github/open-issues/abdullah-cse/contribution_heatmap/?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/issues) [![Github Pull Request](https://badgen.net/github/open-prs/abdullah-cse/contribution_heatmap/?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/pulls) [![Github Last Commit](https://badgen.net/github/last-commit/abdullah-cse/contribution_heatmap/?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/commits/main/)
+[![X (formerly Twitter) Follow](https://badgen.net/static/Follow/@abdullahPBD/black?icon=twitter)](https://x.com/abdullahPDB)
+
 
 A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph.
 
@@ -176,7 +177,3 @@ class ContributionEntry {
 ## 📝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-## 📄 License
-
-This project is licensed under the BSD 3-Clause License - see the LICENSE file for details.
