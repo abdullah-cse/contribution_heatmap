@@ -49,8 +49,8 @@ void main() {
     });
 
     test('monthAbbreviation returns correct value', () {
-      expect(HeatmapUtils.monthAbbreviation(1), 'Jan');
-      expect(HeatmapUtils.monthAbbreviation(12), 'Dec');
+      expect(HeatmapUtils.monthAbbreviation(1, Locale('en')), 'Jan');
+      expect(HeatmapUtils.monthAbbreviation(12, Locale('en')), 'Dec');
     });
 
     test('isFirstWeekdayOfMonth', () {

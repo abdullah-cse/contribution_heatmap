@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'heatmap_localizations.dart';
 
 /// Utility functions and extensions for the contribution heatmap.
 ///
@@ -51,50 +52,38 @@ class HeatmapUtils {
     return weekStart.add(const Duration(days: 6));
   }
 
-  /// Generates localized weekday short names based on start weekday preference.
+  /// Returns localized weekday short names based on start weekday preference
   ///
-  /// [locale] - The locale for localization (currently uses English fallback)
-  /// [startWeekday] - The first day of the week (1=Monday, 7=Sunday)
+  /// [locale] - The locale for localization (e.g., `Locale('de')`).
+  /// [startWeekday] - The first day of the week (1=Monday, 7=Sunday).
+  /// Unknown locales automatically fall back to English.
   ///
-  /// Returns a list of 7 short weekday names in display order.
-  ///
-  /// Example:
+  /// Example in English starting with Monday:
   /// ```dart
   /// final names = HeatmapUtils.weekdayShortNames(Locale('en'), DateTime.monday);
   /// // Returns: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   /// ```
+  ///
+  /// Example in Spanish starting with Monday:
+  /// ```dart
+  ///final names = HeatmapUtils.weekdayShortNames(Locale('es'), DateTime.monday);
+  /// // Returns: ['lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.', 'dom.']
+  /// ```
   static List<String> weekdayShortNames(Locale locale, int startWeekday) {
-    // TODO: Add proper i18n support using DateFormat
-    const allNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final allNames = HeatmapLocalizations.weekdayShortNames(locale);
 
-    // Calculate rotation to put startWeekday at index 0
+    // Rotate list so that [startWeekday] is at index 0
     final rotateBy = startWeekday - DateTime.monday; // 0-6
-
     return [for (int i = 0; i < 7; i++) allNames[(i + rotateBy) % 7]];
   }
 
-  /// Returns abbreviated month name for the given month number.
+  /// Returns localized month abbreviation.
   ///
-  /// [month] - Month number (1-12)
-  ///
-  /// Currently returns English abbreviations.
-  /// TODO: Add proper i18n support.
-  static String monthAbbreviation(int month) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return months[month - 1];
+  /// [month] - Month number (1–12)
+  /// [locale] - The locale for localization.
+  /// Unknown locales automatically fall back to English.
+  static String monthAbbreviation(int month, Locale locale) {
+    return HeatmapLocalizations.monthAbbreviation(month, locale);
   }
 
   /// Checks if a date represents the first occurrence of its month in a week column.

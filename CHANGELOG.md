@@ -1,3 +1,9 @@
+## [0.1.0] - 2025-09-16
+
+- feat(i18n): Add i18n Support for French, German, Spanish locale.
+- test(heatmap_localization): Add 🧪Unit test for French, German,Spanish locale
+- docs(readme): Add i18n support section.
+
 ## [0.0.5] - 2025-09-15
 
 - docs(readme): Add various info badges.

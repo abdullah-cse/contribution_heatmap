@@ -464,7 +464,7 @@ class RenderContributionHeatmap extends RenderBox {
           HeatmapUtils.isFirstWeekdayOfMonth(cursor);
 
       if (shouldShowLabel) {
-        final label = HeatmapUtils.monthAbbreviation(month);
+        final label = HeatmapUtils.monthAbbreviation(month, _locale);
         final textPainter = TextPainter(
           text: TextSpan(text: label, style: _monthTextStyle),
           textDirection: TextDirection.ltr,
