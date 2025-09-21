@@ -1,3 +1,8 @@
+## [0.2.0-dev.3] - 2025-09-21
+
+- feat(heatmap_ui): Add `splittedMonthView` for visual separation between months.
+- docs(readme): Update readme file with `splittedMonthView`
+
 ## [0.1.0] - 2025-09-16
 
 - feat(i18n): Add i18n Support for French, German, Spanish locale.

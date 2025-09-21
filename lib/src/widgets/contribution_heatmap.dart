@@ -17,6 +17,15 @@ import '../rendering/render_contribution_heatmap.dart';
 ///   },
 /// )
 /// ```
+///
+/// ## Split Month View:
+/// ```dart
+/// ContributionHeatmap(
+///   entries: entries,
+///   splittedMonthView: true, // Adds visual separation between months
+///   onCellTap: (date, value) => print('$date: $value'),
+/// )
+/// ```
 
 class ContributionHeatmap extends LeafRenderObjectWidget {
   /// List of contribution entries to display.
@@ -98,6 +107,25 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// Defaults to true.
   final bool showWeekdayLabels;
 
+  /// Whether to add visual separation between months.
+  ///
+  /// When enabled, adds an empty column (7 cells) between different months,
+  /// creating clear visual boundaries. This makes it easier to distinguish
+  /// between months in longer time ranges.
+  ///
+  /// This feature is particularly useful for:
+  /// - Year-long views where month boundaries are important
+  /// - Applications where monthly patterns need to be highlighted
+  /// - Improving readability of dense contribution data
+  ///
+  /// Example:
+  /// ```dart
+  /// splittedMonthView: true, // Clear separation between months
+  /// ```
+  ///
+  /// Defaults to false.
+  final bool splittedMonthView;
+
   /// Text style for month labels.
   ///
   /// If null, uses the default text style from the current theme
@@ -148,6 +176,9 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// Use this to show tooltips, navigate to details, or perform
   /// other actions based on the selected day.
   ///
+  /// Note: Empty cells in split month view (when [splittedMonthView] is true)
+  /// will not trigger this callback as they don't represent valid dates.
+  ///
   /// Example:
   /// ```dart
   /// onCellTap: (date, value) {
@@ -178,6 +209,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     this.padding = const EdgeInsets.all(16),
     this.showMonthLabels = true,
     this.showWeekdayLabels = true,
+    this.splittedMonthView = false,
     this.monthTextStyle,
     this.weekdayTextStyle,
     this.startWeekday = DateTime.monday,
@@ -218,6 +250,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       monthTextStyle: resolvedMonthStyle,
       weekdayTextStyle: resolvedWeekdayStyle,
       startWeekday: startWeekday,
+      splittedMonthView: splittedMonthView,
       colorScale: colorScale,
       onCellTap: onCellTap,
       textScaler: textScaler,
@@ -258,6 +291,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       ..monthTextStyle = resolvedMonthStyle
       ..weekdayTextStyle = resolvedWeekdayStyle
       ..startWeekday = startWeekday
+      ..splittedMonthView = splittedMonthView
       ..colorScale = colorScale
       ..onCellTap = onCellTap
       ..textScaler = textScaler

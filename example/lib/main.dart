@@ -30,8 +30,12 @@ class ExampleHomePage extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: ContributionHeatmap(
+          startWeekday: DateTime.monday,
+          cellRadius: 5,
           minDate: DateTime(2025, 4, 1), // Start date: March 1, 2025
-          maxDate: DateTime.now(),
+          maxDate: DateTime.now(), // End date: Today
+          cellSize: 16,
+          splittedMonthView: false,
           entries: [
             ContributionEntry(DateTime(2025, 4, 23), 5),
             ContributionEntry(DateTime(2025, 4, 24), 7),
@@ -78,6 +82,8 @@ class ExampleHomePage extends StatelessWidget {
             ContributionEntry(DateTime(2025, 8, 29), 7),
             ContributionEntry(DateTime(2025, 8, 30), 4),
             ContributionEntry(DateTime(2025, 8, 31), 3),
+            ContributionEntry(DateTime(2025, 9, 8), 8),
+            ContributionEntry(DateTime(2025, 9, 11), 5),
 
             // You can add more entries...
           ],
