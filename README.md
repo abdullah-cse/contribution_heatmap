@@ -2,19 +2,21 @@
 
 [![License: BSD-3-Clause](https://badgen.net/static/license/BSD-3-Clause/blue)](https://opensource.org/licenses/BSD-3-Clause) [![Pub Version](https://badgen.net/pub/v/contribution_heatmap)](https://pub.dev/packages/contribution_heatmap/versions) [![Pub Likes](https://badgen.net/pub/likes/contribution_heatmap)](https://pub.dev/packages/contribution_heatmap/score) [![Pub Monthly Downloads](https://badgen.net/pub/dm/contribution_heatmap?color=purple)](https://pub.dev/packages/contribution_heatmap/score)
 [![Github Stars](https://badgen.net/github/stars/abdullah-cse/contribution_heatmap?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/stargazers) [![Github Open Isssues](https://badgen.net/github/open-issues/abdullah-cse/contribution_heatmap/?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/issues) [![Github Pull Request](https://badgen.net/github/open-prs/abdullah-cse/contribution_heatmap/?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/pulls) [![Github Last Commit](https://badgen.net/github/last-commit/abdullah-cse/contribution_heatmap/?icon=github)](https://github.com/abdullah-cse/contribution_heatmap/commits/main/)
-[![X (formerly Twitter) Follow](https://badgen.net/static/Follow/@abdullahPBD/black?icon=twitter)](https://x.com/abdullahPDB)
+[![X (formerly Twitter) Follow](https://badgen.net/static/Follow/@abdullahPBD/blue?icon=twitter)](https://x.com/abdullahPDB)
 
 
-A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph with proper i18n support.
+A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph with proper i18n support and intelligent month separation.
 
-![Contribution Heatmap Rounded Cell](/example/heatmap_macos_rounded.png)
-![Contribution Heatmap](/example/heatmap_macos.png)
+![Contribution Heatmap minimal Screenshot](/example/screenshots/contribution_heatmap_minial.png)
+![Contribution Heatmap with splittdMonthView and showDate](/example/screenshots/splitMonthViewWithDate.png)
 
 ## ✨ Features
 
 - **🚀 Ultra-High Performance**: Custom RenderBox implementation with optimized rendering pipeline
 - **👆 Interactive**: Full tap support with proper hit testing and gesture handling
 - **🎨 Fully Customizable**: Colors, sizing, labels, and layout options
+- **📅 Split Month View**: Visual month separation with intelligent empty cell insertion
+- **📊 Cell Date Display**: NEW! Show day numbers inside contribution cells
 - **♿ Accessibility Ready**: Supports text scaling and high contrast modes
 - **🌍 Internationalized**: Locale-aware text rendering with customizable start weekdays  
 - **💾 Memory Efficient**: Optimized data structures minimize memory usage and GC pressure
@@ -47,6 +49,41 @@ class MyWidget extends StatelessWidget {
 }
 ```
 
+### 📅 Split Month View
+
+Enable clear visual separation between months with intelligent spacing:
+
+```dart
+ContributionHeatmap(
+  entries: myContributionData,
+  splittedMonthView: true, // Adds visual gaps between months
+  onCellTap: (date, value) {
+    print('Tapped: $date with $value contributions');
+  },
+)
+```
+
+
+### Cell Date Display (NEW!)
+
+Show day numbers inside each contribution cell for easier date identification:
+
+```dart
+ContributionHeatmap(
+  entries: myContributionData,
+  showCellDate: true, // Show date numbers inside cells
+  cellSize: 16.0, // Larger cells work better with text
+  cellDateTextStyle: TextStyle(
+    fontSize: 8,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  ),
+  onCellTap: (date, value) {
+    print('$date: $value contributions');
+  },
+)
+```
+
 ### Advanced Usage
 
 ```dart
@@ -56,9 +93,11 @@ ContributionHeatmap(
   // Custom date range
   minDate: DateTime(2025, 1, 1),
   maxDate: DateTime.now(),
+  splittedMonthView: true,   // Visual separation between months
+  showCellDate: true,        // NEW: Show date numbers in cells
   
   // Visual customization
-  cellSize: 14.0,
+  cellSize: 16.0,
   cellSpacing: 4.0,
   cellRadius: 3.0,
   padding: EdgeInsets.all(20),
@@ -80,6 +119,11 @@ ContributionHeatmap(
   weekdayTextStyle: TextStyle(
     color: Colors.grey[500],
     fontSize: 11,
+  ),
+  cellDateTextStyle: TextStyle(   // NEW: Style for date numbers
+    fontSize: 8,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   ),
   
   // Week starts on Sunday (US style)
@@ -126,7 +170,7 @@ Currently, this package supports English (EN) and
 More languages will be added soon.
 
 Exemple de Contribution Heatmap en français (fr-FR)
-![Exemple de Contribution Heatmap en français (fr-FR)](/example/fr-FR.png)
+![Exemple de Contribution Heatmap en français (fr-FR)](/example/screenshots/fr-FR.png)
 
 ## 🎨 Customization Options
 
@@ -145,8 +189,11 @@ Exemple de Contribution Heatmap en français (fr-FR)
 |----------|------|---------|-------------|
 | `showMonthLabels` | `bool` | `true` | Show month names above the heatmap |
 | `showWeekdayLabels` | `bool` | `true` | Show day names on the left |
+| `showCellDate` | `bool` | `false` | **NEW!** Show date numbers inside cells |
+| `cellDateTextStyle` | `TextStyle?` | `null` | **NEW!** Custom style for cell date numbers |
 | `monthTextStyle` | `TextStyle?` | `null` | Custom style for month labels |
 | `weekdayTextStyle` | `TextStyle?` | `null` | Custom style for weekday labels |
+
 
 ### Date & Layout
 
@@ -155,6 +202,7 @@ Exemple de Contribution Heatmap en français (fr-FR)
 | `minDate` | `DateTime?` | `null` | Override minimum date (auto-calculated if null) |
 | `maxDate` | `DateTime?` | `null` | Override maximum date (auto-calculated if null) |
 | `startWeekday` | `int` | `DateTime.monday` | First day of week (1=Mon, 7=Sun) |
+| `splittedMonthView` | `bool` | `false` | **NEW!** Enable visual month separation |
 
 ### Colors & Interaction
 
@@ -163,7 +211,6 @@ Exemple de Contribution Heatmap en français (fr-FR)
 | `colorScale` | `Color Function(int)?` | `null` | Custom color mapping function |
 | `onCellTap` | `void Function(DateTime, int)?` | `null` | Callback for cell tap events |
 
-
 ## ⚡ Performance Characteristics
 
 ### Rendering Performance
@@ -171,19 +218,31 @@ Exemple de Contribution Heatmap en français (fr-FR)
 - **Custom RenderBox** implementation bypasses widget rebuilds
 - **Smart invalidation** - only recomputes when properties actually change
 - **Efficient hit testing** with proper bounds checking
+- **Optimized split month rendering** with minimal computational overhead
+- **Intelligent cell date rendering** with automatic size detection
 
 ### Memory Efficiency
 - **HashMap-based** data structure for fast lookups
 - **Minimal object allocation** during painting
 - **Proper gesture recognizer cleanup** prevents memory leaks
 - **Optimized text rendering** with cached TextPainter objects
+- **Linear date sequence** for efficient split month calculations
 
 ### Scalability
 - Handles **thousands of data points** efficiently
 - **Constant time complexity** for cell rendering
 - **Responsive layout** adapts to available space
-- **Smooth interactions** even with large datasets
+- **Smooth interactions** even with large datasets and split months
 
 ## 📝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+Feel free to contribute! Check out the [guides](/CONTRIBUTING.md) for more information.
+
+
+## ❤️‍🔥 Enjoying this package?
+
+Here are a few ways you can show support:
+- ⭐️ Star it on [GitHub](https://github.com/abdullah-cse/contribution_heatmap) – stars help others discover it!
+- 👍 Give it a thumbs up on pub.dev – every bit of appreciation counts!
+- 👉 Try my [TypeFast app](https://web.typefast.app), a fun way to sharpen your touch typing skills with games.
+- 👉  Explore more of my [work!](https://abdullah.com.bd)

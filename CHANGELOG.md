@@ -1,7 +1,19 @@
+## [0.3.0] - 2025-09-22
+
+- feat(heatmap_ui): Add `showCellDate` property to display day numbers inside contribution cells
+- feat(heatmap_ui): Add `cellDateTextStyle` property for customizing cell date text appearance
+- perf(render): Optimize cell date painting with reusable TextPainter objects and smart visibility checks
+- docs(readme): Add cell date display section with comprehensive examples and API documentation
+
+## [0.2.0] - 2025-09-21
+
+- feat(heatmap_ui): Add `splittedMonthView` for visual separation between months.
+- docs(readme): Update readme file with `splittedMonthView`
+
 ## [0.1.0] - 2025-09-16
 
 - feat(i18n): Add i18n Support for French, German, Spanish locale.
-- test(heatmap_localization): Add 🧪Unit test for French, German,Spanish locale
+- test(heatmap_localization): Add Unit test for French, German,Spanish locale
 - docs(readme): Add i18n support section.
 
 ## [0.0.5] - 2025-09-15
