@@ -12,6 +12,7 @@ import '../utils/heatmap_utils.dart';
 /// - Hit testing for tap interactions
 /// - Memory-efficient data management
 /// - Optional split month view with smart empty cell insertion
+/// - Optional cell date display inside contribution cells
 ///
 /// The render object uses a custom layout algorithm optimized for
 /// the heatmap's grid structure, minimizing recomputations and
@@ -31,8 +32,10 @@ class RenderContributionHeatmap extends RenderBox {
     required EdgeInsets padding,
     required bool showMonthLabels,
     required bool showWeekdayLabels,
+    required bool showCellDate,
     required TextStyle monthTextStyle,
     required TextStyle weekdayTextStyle,
+    required TextStyle cellDateTextStyle,
     required int startWeekday,
     required bool splittedMonthView,
     Color Function(int value)? colorScale,
@@ -48,8 +51,10 @@ class RenderContributionHeatmap extends RenderBox {
        _padding = padding,
        _showMonthLabels = showMonthLabels,
        _showWeekdayLabels = showWeekdayLabels,
+       _showCellDate = showCellDate,
        _monthTextStyle = monthTextStyle,
        _weekdayTextStyle = weekdayTextStyle,
+       _cellDateTextStyle = cellDateTextStyle,
        _startWeekday = startWeekday,
        _splittedMonthView = splittedMonthView,
        _colorScale = colorScale,
@@ -153,6 +158,15 @@ class RenderContributionHeatmap extends RenderBox {
     }
   }
 
+  /// Whether to show date numbers inside each contribution cell
+  bool _showCellDate;
+  set showCellDate(bool value) {
+    if (_showCellDate != value) {
+      _showCellDate = value;
+      markNeedsPaint(); // Only affects cell painting, not layout
+    }
+  }
+
   /// Text style for month labels
   TextStyle _monthTextStyle;
   set monthTextStyle(TextStyle value) {
@@ -168,6 +182,15 @@ class RenderContributionHeatmap extends RenderBox {
     if (_weekdayTextStyle != value) {
       _weekdayTextStyle = value;
       markNeedsLayout(); // Font size changes affect label space requirements
+    }
+  }
+
+  /// Text style for date numbers displayed inside cells
+  TextStyle _cellDateTextStyle;
+  set cellDateTextStyle(TextStyle value) {
+    if (_cellDateTextStyle != value) {
+      _cellDateTextStyle = value;
+      markNeedsPaint(); // Only affects cell text painting, not layout
     }
   }
 
@@ -597,6 +620,7 @@ class RenderContributionHeatmap extends RenderBox {
   /// 1. Weekday labels (leftmost, behind grid)
   /// 2. Month labels (topmost, behind grid)
   /// 3. Contribution cells (foreground, main content)
+  /// 4. Cell date text (on top of cells, if enabled)
   @override
   void paint(PaintingContext context, Offset offset) {
     final canvas = context.canvas;
@@ -716,6 +740,7 @@ class RenderContributionHeatmap extends RenderBox {
   ///
   /// This iterates through the date sequence and paints each valid date
   /// as a colored rounded rectangle. Empty cells (nulls) are skipped.
+  /// If [showCellDate] is enabled, also paints date numbers inside cells.
   ///
   /// Performance optimization: Reuses paint objects to minimize allocations.
   void _paintContributionCells(Canvas canvas, Offset gridOrigin) {
@@ -755,7 +780,41 @@ class RenderContributionHeatmap extends RenderBox {
         roundedRect.shift(cellRect.topLeft).scaleRRect(_cellSize, _cellSize),
         paint,
       );
+
+      // Paint date number inside the cell if enabled
+      if (_showCellDate) {
+        _paintCellDate(canvas, date, cellRect);
+      }
     }
+  }
+
+  /// Paints the date number inside a contribution cell.
+  ///
+  /// The date is centered within the cell bounds and uses the configured
+  /// cell date text style. Only paints if the cell is large enough to
+  /// accommodate readable text.
+  void _paintCellDate(Canvas canvas, DateTime date, Rect cellRect) {
+    // Only show date text if cell is reasonably large
+    if (_cellSize < 10) return; // Too small for readable text
+
+    final dateText = date.day.toString();
+    final textPainter = TextPainter(
+      text: TextSpan(text: dateText, style: _cellDateTextStyle),
+      textDirection: TextDirection.ltr,
+      textScaler: _textScaler,
+      locale: _locale,
+    )..layout();
+
+    // Only paint if text fits comfortably within the cell
+    if (textPainter.width > _cellSize - 2 || textPainter.height > _cellSize - 2) {
+      return; // Text too big for cell
+    }
+
+    // Center the text within the cell
+    final textX = cellRect.left + (_cellSize - textPainter.width) / 2;
+    final textY = cellRect.top + (_cellSize - textPainter.height) / 2;
+
+    textPainter.paint(canvas, Offset(textX, textY));
   }
 
   // ✅ HIT TESTING IMPLEMENTATION

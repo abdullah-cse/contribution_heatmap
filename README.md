@@ -7,15 +7,16 @@
 
 A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph with proper i18n support and intelligent month separation.
 
-![Contribution Heatmap with splittdMonthView](/example/screenshots/withSplitMonthView.png)
-![Contribution Heatmap without splittdMonthView](/example/screenshots/withoutSplitMonthView.png)
+![Contribution Heatmap minimal Screenshot](/example/screenshots/contribution_heatmap_minial.png)
+![Contribution Heatmap with splittdMonthView and showDate](/example/screenshots/splitMonthViewWithDate.png)
 
 ## ✨ Features
 
 - **🚀 Ultra-High Performance**: Custom RenderBox implementation with optimized rendering pipeline
 - **👆 Interactive**: Full tap support with proper hit testing and gesture handling
 - **🎨 Fully Customizable**: Colors, sizing, labels, and layout options
-- **📅 Split Month View**: NEW! Visual month separation with intelligent empty cell insertion
+- **📅 Split Month View**: Visual month separation with intelligent empty cell insertion
+- **📊 Cell Date Display**: NEW! Show day numbers inside contribution cells
 - **♿ Accessibility Ready**: Supports text scaling and high contrast modes
 - **🌍 Internationalized**: Locale-aware text rendering with customizable start weekdays  
 - **💾 Memory Efficient**: Optimized data structures minimize memory usage and GC pressure
@@ -48,24 +49,40 @@ class MyWidget extends StatelessWidget {
 }
 ```
 
-### Split Month View (NEW!)
+### 📅 Split Month View
 
 Enable clear visual separation between months with intelligent spacing:
 
 ```dart
 ContributionHeatmap(
   entries: myContributionData,
-  splittedMonthView: true, // NEW: Adds visual gaps between months
+  splittedMonthView: true, // Adds visual gaps between months
   onCellTap: (date, value) {
     print('Tapped: $date with $value contributions');
   },
 )
 ```
 
-**Split Month View Benefits:**
-- **Smart Spacing**: Only adds necessary empty cells, not full weeks
-- **Perfect Alignment**: First month aligns with week start day
-- **Clean Boundaries**: Clear visual separation between consecutive months
+
+### Cell Date Display (NEW!)
+
+Show day numbers inside each contribution cell for easier date identification:
+
+```dart
+ContributionHeatmap(
+  entries: myContributionData,
+  showCellDate: true, // Show date numbers inside cells
+  cellSize: 16.0, // Larger cells work better with text
+  cellDateTextStyle: TextStyle(
+    fontSize: 8,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  ),
+  onCellTap: (date, value) {
+    print('$date: $value contributions');
+  },
+)
+```
 
 ### Advanced Usage
 
@@ -76,10 +93,11 @@ ContributionHeatmap(
   // Custom date range
   minDate: DateTime(2025, 1, 1),
   maxDate: DateTime.now(),
-  splittedMonthView: true,   // NEW: Enable split month view
+  splittedMonthView: true,   // Visual separation between months
+  showCellDate: true,        // NEW: Show date numbers in cells
   
   // Visual customization
-  cellSize: 14.0,
+  cellSize: 16.0,
   cellSpacing: 4.0,
   cellRadius: 3.0,
   padding: EdgeInsets.all(20),
@@ -101,6 +119,11 @@ ContributionHeatmap(
   weekdayTextStyle: TextStyle(
     color: Colors.grey[500],
     fontSize: 11,
+  ),
+  cellDateTextStyle: TextStyle(   // NEW: Style for date numbers
+    fontSize: 8,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   ),
   
   // Week starts on Sunday (US style)
@@ -147,7 +170,7 @@ Currently, this package supports English (EN) and
 More languages will be added soon.
 
 Exemple de Contribution Heatmap en français (fr-FR)
-![Exemple de Contribution Heatmap en français (fr-FR)](/example/fr-FR.png)
+![Exemple de Contribution Heatmap en français (fr-FR)](/example/screenshots/fr-FR.png)
 
 ## 🎨 Customization Options
 
@@ -166,8 +189,11 @@ Exemple de Contribution Heatmap en français (fr-FR)
 |----------|------|---------|-------------|
 | `showMonthLabels` | `bool` | `true` | Show month names above the heatmap |
 | `showWeekdayLabels` | `bool` | `true` | Show day names on the left |
+| `showCellDate` | `bool` | `false` | **NEW!** Show date numbers inside cells |
+| `cellDateTextStyle` | `TextStyle?` | `null` | **NEW!** Custom style for cell date numbers |
 | `monthTextStyle` | `TextStyle?` | `null` | Custom style for month labels |
 | `weekdayTextStyle` | `TextStyle?` | `null` | Custom style for weekday labels |
+
 
 ### Date & Layout
 
@@ -193,6 +219,7 @@ Exemple de Contribution Heatmap en français (fr-FR)
 - **Smart invalidation** - only recomputes when properties actually change
 - **Efficient hit testing** with proper bounds checking
 - **Optimized split month rendering** with minimal computational overhead
+- **Intelligent cell date rendering** with automatic size detection
 
 ### Memory Efficiency
 - **HashMap-based** data structure for fast lookups
@@ -210,3 +237,12 @@ Exemple de Contribution Heatmap en français (fr-FR)
 ## 📝 Contributing
 
 Feel free to contribute! Check out the [guides](/CONTRIBUTING.md) for more information.
+
+
+## ❤️‍🔥 Enjoying this package?
+
+Here are a few ways you can show support:
+- ⭐️ Star it on [GitHub](https://github.com/abdullah-cse/contribution_heatmap) – stars help others discover it!
+- 👍 Give it a thumbs up on pub.dev – every bit of appreciation counts!
+- 👉 Try my [TypeFast app](https://web.typefast.app), a fun way to sharpen your touch typing skills with games.
+- 👉  Explore more of my [work!](https://abdullah.com.bd)
