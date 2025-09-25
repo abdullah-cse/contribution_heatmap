@@ -30,13 +30,14 @@ class ExampleHomePage extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: ContributionHeatmap(
+          heatmapColor: HeatmapColor.green,
           startWeekday: DateTime.monday,
           cellRadius: 5,
           minDate: DateTime(2025, 4, 1), // Start date: March 1, 2025
           maxDate: DateTime.now(), // End date: Today
           cellSize: 19,
           splittedMonthView: true, // Visual separation between months
-          showCellDate: true, // Show date numbers inside cells
+          // showCellDate: true, // Show date numbers inside cells
           entries: [
             ContributionEntry(DateTime(2025, 4, 23), 5),
             ContributionEntry(DateTime(2025, 4, 24), 7),
