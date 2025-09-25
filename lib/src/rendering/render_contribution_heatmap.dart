@@ -415,14 +415,18 @@ class RenderContributionHeatmap extends RenderBox {
   /// - _firstDayAligned = Jan 13 (Monday of Jan 15's week)
   /// - _lastDayAligned = Dec 22 (Sunday of Dec 20's week)
   void _computeAlignedDateRange() {
-    _firstDayAligned = HeatmapUtils.alignToWeekStart(
+    final alignedStart = HeatmapUtils.alignToWeekStart(
       _actualFirstDate,
       _startWeekday,
     );
-    _lastDayAligned = HeatmapUtils.alignToWeekEnd(
+    final alignedEnd = HeatmapUtils.alignToWeekEnd(
       _actualLastDate,
       _startWeekday,
     );
+
+    // Normalize the aligned dates in UTC to ensure consistency
+    _firstDayAligned = HeatmapUtils.dayKey(alignedStart);
+    _lastDayAligned = HeatmapUtils.dayKey(alignedEnd);
   }
 
   /// Step 2c: Builds the final date sequence based on split month view setting.
@@ -437,7 +441,7 @@ class RenderContributionHeatmap extends RenderBox {
       // Every day gets rendered as a cell, no gaps or separators
       DateTime cursor = _firstDayAligned;
       while (!cursor.isAfter(_lastDayAligned)) {
-        _dateSequence.add(cursor);
+        _dateSequence.add(HeatmapUtils.dayKey(cursor));
         cursor = cursor.add(const Duration(days: 1));
       }
     } else {
@@ -479,7 +483,7 @@ class RenderContributionHeatmap extends RenderBox {
       }
 
       // Add the actual date to the sequence
-      _dateSequence.add(cursor);
+      _dateSequence.add(HeatmapUtils.dayKey(cursor));
       previousMonth = currentMonth;
       cursor = cursor.add(const Duration(days: 1));
     }

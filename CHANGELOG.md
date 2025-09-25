@@ -1,3 +1,7 @@
+## [0.3.1-dev.2] - 2025-09-25
+
+- fix(render_heatmap): Mixing `DateTime` and `DateTime` in UTC causing another bug🐛 Fixed.
+
 ## [0.3.1-dev.1] - 2025-09-25
 
 - fix(render_heatmap): `DateTime` midnight or DST(Daylight Saving Time) releted bug
