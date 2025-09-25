@@ -1,3 +1,8 @@
+## [0.3.1-dev.1] - 2025-09-25
+
+- fix(render_heatmap): `DateTime` midnight or DST(Daylight Saving Time) releted bug
+- test(heatmap_utils): Unit🧪 test for `dayKey` normalization with UTC.
+
 ## [0.3.0] - 2025-09-22
 
 - feat(heatmap_ui): Add `showCellDate` property to display day numbers inside contribution cells

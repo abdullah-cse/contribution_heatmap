@@ -7,18 +7,23 @@ import 'heatmap_localizations.dart';
 /// color scaling, and other utility functions used throughout
 /// the heatmap implementation.
 class HeatmapUtils {
-  /// Normalizes a DateTime to midnight (local time) for consistent map keys.
+ 
+  /// /// Normalizes a [DateTime] to a day-only key for consistent map keys
   ///
-  /// This ensures that all dates are compared at the day level,
-  /// ignoring time components.
+  /// - Ignores time and time zone offsets.
+  /// - Always returns `DateTime.utc(year, month, day)`.
+  ///
+  /// This ensures that:
+  ///   - DST changes don't break day comparisons.
+  ///   - Two dates on the same local calendar day map to the same key.
   ///
   /// Example:
   /// ```dart
-  /// final normalized = HeatmapUtils.dayKey(DateTime(2024, 1, 15, 14, 30));
-  /// // Returns: DateTime(2024, 1, 15, 0, 0, 0)
+  /// final normalized = HeatmapUtils.dayKey(DateTime(2025, 7, 26, 23, 30));
+  /// // Returns: DateTime(2025, 7, 26, 0, 0, 0)
   /// ```
   static DateTime dayKey(DateTime date) {
-    return DateTime(date.year, date.month, date.day);
+    return DateTime.utc(date.year, date.month, date.day);
   }
 
   /// Aligns a date to the start of its week based on the specified start weekday.
