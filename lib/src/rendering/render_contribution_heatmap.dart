@@ -806,7 +806,8 @@ class RenderContributionHeatmap extends RenderBox {
     )..layout();
 
     // Only paint if text fits comfortably within the cell
-    if (textPainter.width > _cellSize - 2 || textPainter.height > _cellSize - 2) {
+    if (textPainter.width > _cellSize - 2 ||
+        textPainter.height > _cellSize - 2) {
       return; // Text too big for cell
     }
 

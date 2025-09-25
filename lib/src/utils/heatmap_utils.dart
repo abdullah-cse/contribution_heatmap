@@ -7,7 +7,6 @@ import 'heatmap_localizations.dart';
 /// color scaling, and other utility functions used throughout
 /// the heatmap implementation.
 class HeatmapUtils {
- 
   /// /// Normalizes a [DateTime] to a day-only key for consistent map keys
   ///
   /// - Ignores time and time zone offsets.
