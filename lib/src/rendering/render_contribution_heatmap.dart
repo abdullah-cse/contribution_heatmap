@@ -42,25 +42,25 @@ class RenderContributionHeatmap extends RenderBox {
     void Function(DateTime date, int value)? onCellTap,
     required TextScaler textScaler,
     required Locale locale,
-  }) : _entries = entries,
-       _minDate = minDate,
-       _maxDate = maxDate,
-       _cellSize = cellSize,
-       _cellSpacing = cellSpacing,
-       _cellRadius = cellRadius,
-       _padding = padding,
-       _showMonthLabels = showMonthLabels,
-       _showWeekdayLabels = showWeekdayLabels,
-       _showCellDate = showCellDate,
-       _monthTextStyle = monthTextStyle,
-       _weekdayTextStyle = weekdayTextStyle,
-       _cellDateTextStyle = cellDateTextStyle,
-       _startWeekday = startWeekday,
-       _splittedMonthView = splittedMonthView,
-       _colorScale = colorScale,
-       _onCellTap = onCellTap,
-       _textScaler = textScaler,
-       _locale = locale {
+  })  : _entries = entries,
+        _minDate = minDate,
+        _maxDate = maxDate,
+        _cellSize = cellSize,
+        _cellSpacing = cellSpacing,
+        _cellRadius = cellRadius,
+        _padding = padding,
+        _showMonthLabels = showMonthLabels,
+        _showWeekdayLabels = showWeekdayLabels,
+        _showCellDate = showCellDate,
+        _monthTextStyle = monthTextStyle,
+        _weekdayTextStyle = weekdayTextStyle,
+        _cellDateTextStyle = cellDateTextStyle,
+        _startWeekday = startWeekday,
+        _splittedMonthView = splittedMonthView,
+        _colorScale = colorScale,
+        _onCellTap = onCellTap,
+        _textScaler = textScaler,
+        _locale = locale {
     // Initialize the data structures and prepare for rendering
     _rebuildIndex(); // Convert entries to fast lookup map
     _initRecognizers(); // Set up gesture handling
@@ -390,14 +390,12 @@ class RenderContributionHeatmap extends RenderBox {
       _actualFirstDate = _actualLastDate.subtract(const Duration(days: 365));
     } else {
       // Normal case: Use explicit parameters or derive from data
-      _actualFirstDate =
-          _minDate ??
+      _actualFirstDate = _minDate ??
           _entries
               .map((e) => HeatmapUtils.dayKey(e.date))
               .reduce((a, b) => a.isBefore(b) ? a : b);
 
-      _actualLastDate =
-          _maxDate ??
+      _actualLastDate = _maxDate ??
           _entries
               .map((e) => HeatmapUtils.dayKey(e.date))
               .reduce((a, b) => a.isAfter(b) ? a : b);
@@ -562,8 +560,7 @@ class RenderContributionHeatmap extends RenderBox {
 
     // Step 2: Calculate core grid dimensions
     // Grid width = (columns * cell_size) + (spacing_between_columns)
-    final gridWidth =
-        _totalColumns * _cellSize +
+    final gridWidth = _totalColumns * _cellSize +
         math.max(0, _totalColumns - 1) * _cellSpacing;
     // Grid height = (7_rows * cell_size) + (spacing_between_rows)
     final gridHeight = 7 * _cellSize + 6 * _cellSpacing;
@@ -631,8 +628,7 @@ class RenderContributionHeatmap extends RenderBox {
 
     // Calculate where the contribution grid starts
     // This accounts for padding and label space
-    final gridOrigin =
-        offset +
+    final gridOrigin = offset +
         Offset(_padding.left + _leftLabelWidth, _padding.top + _topLabelHeight);
 
     // Paint labels first (they go behind the grid visually)
@@ -669,14 +665,12 @@ class RenderContributionHeatmap extends RenderBox {
       )..layout(maxWidth: _leftLabelWidth - 2); // Leave small margin
 
       // Center the label vertically with its corresponding grid row
-      final labelY =
-          gridOrigin.dy +
+      final labelY = gridOrigin.dy +
           row * (_cellSize + _cellSpacing) +
           (_cellSize - textPainter.height) / 2;
 
       // Right-align the text within the available label space
-      final labelX =
-          widgetOffset.dx +
+      final labelX = widgetOffset.dx +
           _padding.left +
           _leftLabelWidth -
           textPainter.width -
@@ -717,8 +711,7 @@ class RenderContributionHeatmap extends RenderBox {
 
       // Show a label if this is the first column containing a new month
       // and the date qualifies as a "first weekday of the month"
-      final shouldShowLabel =
-          lastLabeledMonth != month &&
+      final shouldShowLabel = lastLabeledMonth != month &&
           HeatmapUtils.isFirstWeekdayOfMonth(firstDateInColumn);
 
       if (shouldShowLabel) {

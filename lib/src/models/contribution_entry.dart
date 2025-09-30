@@ -13,7 +13,7 @@ class ContributionEntry {
   final int count;
 
   const ContributionEntry(this.date, this.count)
-    : assert(count >= 0, 'ContributionEntry\'s Count must be non-negative');
+      : assert(count >= 0, 'ContributionEntry\'s Count must be non-negative');
 
   @override
   String toString() =>
