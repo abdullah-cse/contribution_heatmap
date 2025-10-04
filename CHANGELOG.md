@@ -1,3 +1,7 @@
+## [0.3.2] - 2025-09-26
+
+- chore(pubspec): Downgrade Dart SDK minimum version to support a wider range.
+
 ## [0.3.1] - 2025-09-26
 
 - fix(render_heatmap): `DateTime` midnight or DST(Daylight Saving Time) releted bug #5
