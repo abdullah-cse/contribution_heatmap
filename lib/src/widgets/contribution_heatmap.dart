@@ -307,9 +307,9 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     // this.colorScale,
     this.onCellTap,
   }) : assert(
-         startWeekday >= DateTime.monday && startWeekday <= DateTime.sunday,
-         'startWeekday must be between DateTime.monday (1) and DateTime.sunday (7)',
-       );
+          startWeekday >= DateTime.monday && startWeekday <= DateTime.sunday,
+          'startWeekday must be between DateTime.monday (1) and DateTime.sunday (7)',
+        );
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -321,16 +321,16 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     final defaultTextStyle = DefaultTextStyle.of(context).style;
     final resolvedMonthStyle =
         (monthTextStyle ?? defaultTextStyle.copyWith(fontSize: 12)).copyWith(
-          height: 1.0,
-        ); // Ensure consistent line height
+      height: 1.0,
+    ); // Ensure consistent line height
     final resolvedWeekdayStyle =
         (weekdayTextStyle ?? defaultTextStyle.copyWith(fontSize: 11)).copyWith(
-          height: 1.0,
-        ); // Ensure consistent line height
+      height: 1.0,
+    ); // Ensure consistent line height
     final resolvedCellDateStyle =
         (cellDateTextStyle ?? defaultTextStyle.copyWith(fontSize: 8)).copyWith(
-          height: 1.0,
-        ); // Default small font for cell dates
+      height: 1.0,
+    ); // Default small font for cell dates
 
     return RenderContributionHeatmap(
       entries: entries,
@@ -368,16 +368,16 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
 
     final resolvedMonthStyle =
         (monthTextStyle ?? defaultTextStyle.copyWith(fontSize: 12)).copyWith(
-          height: 1.0,
-        );
+      height: 1.0,
+    );
     final resolvedWeekdayStyle =
         (weekdayTextStyle ?? defaultTextStyle.copyWith(fontSize: 11)).copyWith(
-          height: 1.0,
-        );
+      height: 1.0,
+    );
     final resolvedCellDateStyle =
         (cellDateTextStyle ?? defaultTextStyle.copyWith(fontSize: 8)).copyWith(
-          height: 1.0,
-        );
+      height: 1.0,
+    );
 
     // Recalculate the color scale function when entries or heatmapColor change
     renderObject

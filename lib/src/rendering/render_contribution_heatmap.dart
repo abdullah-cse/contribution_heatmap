@@ -343,14 +343,13 @@ class RenderContributionHeatmap extends RenderBox {
       _actualLastDate = HeatmapUtils.dayKey(today);
       _actualFirstDate = _actualLastDate.subtract(const Duration(days: 365));
     } else {
-      _actualFirstDate =
-          _minDate ??
+      // Normal case: Use explicit parameters or derive from data
+      _actualFirstDate = _minDate ??
           _entries
               .map((e) => HeatmapUtils.dayKey(e.date))
               .reduce((a, b) => a.isBefore(b) ? a : b);
 
-      _actualLastDate =
-          _maxDate ??
+      _actualLastDate = _maxDate ??
           _entries
               .map((e) => HeatmapUtils.dayKey(e.date))
               .reduce((a, b) => a.isAfter(b) ? a : b);
@@ -404,6 +403,7 @@ class RenderContributionHeatmap extends RenderBox {
         _addMonthSeparator();
       }
 
+      // Add the actual date to the sequence
       _dateSequence.add(HeatmapUtils.dayKey(cursor));
       previousMonth = currentMonth;
       cursor = cursor.add(const Duration(days: 1));
@@ -449,8 +449,9 @@ class RenderContributionHeatmap extends RenderBox {
     _leftLabelWidth = _showWeekdayLabels ? _measureWeekdayLabelsWidth() : 0;
     _topLabelHeight = _showMonthLabels ? _measureMonthLabelHeight() : 0;
 
-    final gridWidth =
-        _totalColumns * _cellSize +
+    // Step 2: Calculate core grid dimensions
+    // Grid width = (columns * cell_size) + (spacing_between_columns)
+    final gridWidth = _totalColumns * _cellSize +
         math.max(0, _totalColumns - 1) * _cellSpacing;
     final gridHeight = 7 * _cellSize + 6 * _cellSpacing;
 
