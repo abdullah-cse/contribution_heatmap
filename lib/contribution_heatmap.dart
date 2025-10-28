@@ -2,5 +2,6 @@
 
 library;
 
+export 'src/enum/heatmap_color.dart';
 export 'src/models/contribution_entry.dart';
 export 'src/widgets/contribution_heatmap.dart';

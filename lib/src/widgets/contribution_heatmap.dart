@@ -1,3 +1,4 @@
+import 'package:contribution_heatmap/src/enum/heatmap_color.dart';
 import 'package:flutter/widgets.dart';
 import '../models/contribution_entry.dart';
 import '../rendering/render_contribution_heatmap.dart';
@@ -12,26 +13,29 @@ import '../rendering/render_contribution_heatmap.dart';
 ///     ContributionEntry(DateTime(2025, 9, 6), 3),
 ///     // ... more entries
 ///   ],
+///   heatmapColor: HeatmapColor.blue, // Dynamic color scaling
 ///   onCellTap: (date, value) {
 ///     print('Tapped: $date with $value contributions');
 ///   },
 /// )
 /// ```
 ///
-/// ## Split Month View:
+/// ## Split Month View with Custom Colors:
 /// ```dart
 /// ContributionHeatmap(
 ///   entries: entries,
 ///   splittedMonthView: true, // Adds visual separation between months
+///   heatmapColor: HeatmapColor.purple, // Purple color scheme
 ///   onCellTap: (date, value) => print('$date: $value'),
 /// )
 /// ```
 ///
-/// ## With Cell Dates:
+/// ## With Cell Dates and Green Theme:
 /// ```dart
 /// ContributionHeatmap(
 ///   entries: entries,
 ///   showCellDate: true, // Shows date numbers inside cells
+///   heatmapColor: HeatmapColor.green, // GitHub-style green
 ///   cellDateTextStyle: TextStyle(fontSize: 8, color: Colors.white),
 /// )
 /// ```
@@ -156,6 +160,40 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// Defaults to false.
   final bool splittedMonthView;
 
+  /// Color scheme for the heatmap cells.
+  ///
+  /// This determines the color palette used to represent contribution intensity.
+  /// The widget automatically calculates the appropriate color for each cell
+  /// based on the contribution value and the maximum value in the dataset.
+  ///
+  /// Available color schemes:
+  /// - [HeatmapColor.blue] - Blue color scheme (great for tech/data themes)
+  /// - [HeatmapColor.green] - Green color scheme (GitHub-style classic)
+  /// - [HeatmapColor.purple] - Purple color scheme (creative/artistic themes)
+  /// - [HeatmapColor.red] - Red color scheme (warning/error themes)
+  /// - [HeatmapColor.orange] - Orange color scheme (warm/energetic themes)
+  /// - [HeatmapColor.teal] - Teal color scheme (calm/professional themes)
+  /// - [HeatmapColor.pink] - Pink color scheme (playful themes)
+  /// - [HeatmapColor.indigo] - Indigo color scheme (deep/sophisticated themes)
+  /// - [HeatmapColor.amber] - Amber color scheme (warm/golden themes)
+  /// - [HeatmapColor.cyan] - Cyan color scheme (bright/fresh themes)
+  ///
+  /// The color intensity is calculated dynamically:
+  /// - 0% intensity: No contributions (lightest shade)
+  /// - 100% intensity: Maximum contribution value in dataset (darkest shade)
+  /// - Intermediate values: Proportional intensity levels (10%, 20%, etc.)
+  ///
+  /// Example:
+  /// ```dart
+  /// ContributionHeatmap(
+  ///   entries: entries,
+  ///   heatmapColor: HeatmapColor.purple, // Use purple color scheme
+  /// )
+  /// ```
+  ///
+  /// Defaults to [HeatmapColor.green] for GitHub-style appearance.
+  final HeatmapColor heatmapColor;
+
   /// Text style for month labels.
   ///
   /// If null, uses the default text style from the current theme
@@ -203,23 +241,23 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// Defaults to DateTime.monday.
   final int startWeekday;
 
-  /// Custom color scale function for mapping contribution values to colors.
-  ///
-  /// If provided, this function will be called for each cell to determine
-  /// its color based on the contribution count. If null, uses a default
-  /// GitHub-style green color scale.
-  ///
-  /// Example:
-  /// ```dart
-  /// colorScale: (value) {
-  ///   if (value == 0) return Colors.grey[100]!;
-  ///   if (value <= 2) return Colors.blue[200]!;
-  ///   if (value <= 5) return Colors.blue[400]!;
-  ///   return Colors.blue[600]!;
-  /// },
-  /// ```
-  final Color Function(int value)? colorScale;
-
+  // // Previous default color scale function. isn't used anymore.
+  // /// Custom color scale function for mapping contribution values to colors.
+  // ///
+  // /// If provided, this function will be called for each cell to determine
+  // /// its color based on the contribution count. If null, uses a default
+  // /// GitHub-style green color scale.
+  // ///
+  // /// Example:
+  // /// ```dart
+  // /// colorScale: (value) {
+  // ///   if (value == 0) return Colors.grey[100]!;
+  // ///   if (value <= 2) return Colors.blue[200]!;
+  // ///   if (value <= 5) return Colors.blue[400]!;
+  // ///   return Colors.blue[600]!;
+  // /// },
+  // /// ```
+  // final Color Function(int value)? colorScale;
   /// Callback function called when a cell is tapped.
   ///
   /// Provides the date and contribution value for the tapped cell.
@@ -261,11 +299,12 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     this.showWeekdayLabels = true,
     this.showCellDate = false,
     this.splittedMonthView = false,
+    this.heatmapColor = HeatmapColor.green,
     this.monthTextStyle,
     this.weekdayTextStyle,
     this.cellDateTextStyle,
     this.startWeekday = DateTime.monday,
-    this.colorScale,
+    // this.colorScale,
     this.onCellTap,
   }) : assert(
           startWeekday >= DateTime.monday && startWeekday <= DateTime.sunday,
@@ -309,7 +348,8 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       cellDateTextStyle: resolvedCellDateStyle,
       startWeekday: startWeekday,
       splittedMonthView: splittedMonthView,
-      colorScale: colorScale,
+      heatmapColor: heatmapColor,
+      // colorScale: colorScale,
       onCellTap: onCellTap,
       textScaler: textScaler,
       locale: locale,
@@ -339,7 +379,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       height: 1.0,
     );
 
-    // Update all properties - the render object will handle smart invalidation
+    // Recalculate the color scale function when entries or heatmapColor change
     renderObject
       ..entries = entries
       ..minDate = minDate
@@ -356,7 +396,8 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       ..cellDateTextStyle = resolvedCellDateStyle
       ..startWeekday = startWeekday
       ..splittedMonthView = splittedMonthView
-      ..colorScale = colorScale
+      ..heatmapColor = heatmapColor
+      // ..colorScale = colorScale
       ..onCellTap = onCellTap
       ..textScaler = textScaler
       ..locale = locale;

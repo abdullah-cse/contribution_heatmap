@@ -1,5 +1,8 @@
+import 'package:contribution_heatmap/src/enum/heatmap_color.dart';
+import 'package:contribution_heatmap/src/models/contribution_entry.dart';
 import 'package:flutter/material.dart';
 import 'heatmap_localizations.dart';
+import 'heatmap_color_utils.dart';
 
 /// Utility functions and extensions for the contribution heatmap.
 ///
@@ -7,7 +10,7 @@ import 'heatmap_localizations.dart';
 /// color scaling, and other utility functions used throughout
 /// the heatmap implementation.
 class HeatmapUtils {
-  /// /// Normalizes a [DateTime] to a day-only key for consistent map keys
+  /// Normalizes a [DateTime] to a day-only key for consistent map keys
   ///
   /// - Ignores time and time zone offsets.
   /// - Always returns `DateTime.utc(year, month, day)`.
@@ -103,17 +106,38 @@ class HeatmapUtils {
     // If the date is in the first week of the month (day 1-7), show the label
     return date.day <= 7;
   }
+  // /// Returns the appropriate color for the given contribution level.
+  // static Color defaultColorScale(int value) {
+  //   if (value <= 0) return const Color(0xFFFFE4BC); // Empty/no contributions
+  //   if (value == 1) return Colors.orange.shade200;
+  //   if (value == 2) return Colors.orange.shade400;
+  //   if (value <= 4) return Colors.orange.shade500;
+  //   if (value <= 6) return Colors.orange.shade600;
+  //   if (value <= 8) return Colors.orange.shade700;
+  //   if (value <= 10) return Colors.orange.shade800;
+  //   return Colors.orange.shade900; //  High activity
 
-  /// Returns the appropriate color for the given contribution level.
-  static Color defaultColorScale(int value) {
-    if (value <= 0) return const Color(0xFFFFE4BC); // Empty/no contributions
-    if (value == 1) return Colors.orange.shade200;
-    if (value == 2) return Colors.orange.shade400;
-    if (value <= 4) return Colors.orange.shade500;
-    if (value <= 6) return Colors.orange.shade600;
-    if (value <= 8) return Colors.orange.shade700;
-    if (value <= 10) return Colors.orange.shade800;
-    return Colors.orange.shade900; //  High activity
+  /// Creates a dynamic color scale function based on the provided entries and color scheme.
+  ///
+  /// This is a convenience method that delegates to [HeatmapColorUtils.createColorScale].
+  /// It analyzes the contribution data to determine the maximum value and creates
+  /// an appropriate color scale with 11 intensity levels (0% to 100%).
+  ///
+  /// [entries] - The contribution data to analyze for color scaling
+  /// [heatmapColor] - The color scheme to use
+  ///
+  /// Returns a function that maps contribution values to colors
+  ///
+  /// Example:
+  /// ```dart
+  /// final colorFunc = HeatmapUtils.createDynamicColorScale(entries, HeatmapColor.blue);
+  /// final color = colorFunc(5); // Get color for value 5
+  /// ```
+  static Color Function(int value) createDynamicColorScale(
+    List<ContributionEntry> entries,
+    HeatmapColor heatmapColor,
+  ) {
+    return HeatmapColorUtils.createColorScale(entries, heatmapColor);
   }
 }
 
