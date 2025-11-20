@@ -1,3 +1,29 @@
+## [0.4.1] - 2025-11-20
+
+- **feat(ui)**: Add Visual Playground to try before using this package
+- **breaking** Custom `colorScale` is removed. Color is now automatically calculated based on Highest ContributionEntry's value as 100% and 0(Zero) as 0%
+
+
+**Before**
+
+```dart
+// Custom color scale
+  colorScale: (value) {
+    if (value == 0) return Colors.grey[100]!;
+    if (value <= 2) return Colors.green[200]!;
+    if (value <= 5) return Colors.green[400]!;
+    return Colors.green[600]!;
+  },
+```
+**After**
+```dart
+// Default color is green like Github
+// But you can choose other value.
+heatmapColor: HeatmapColor.green,
+```
+Now its easy to change color. Just supply the `HeatmapColor` value.
+
+
 ## [0.4.0] - 2025-10-28
 
 - feat(ui): Add dynamic color calculation
