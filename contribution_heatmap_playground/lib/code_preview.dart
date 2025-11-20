@@ -52,7 +52,6 @@ class _CodePreviewPaneState extends State<CodePreviewPane> {
             ),
           ),
         ),
-
         Positioned(
           right: 8,
           top: 8,

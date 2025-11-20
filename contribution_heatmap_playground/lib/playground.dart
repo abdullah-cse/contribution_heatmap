@@ -194,7 +194,6 @@ ContributionHeatmap(
       child: Column(
         spacing: 6,
         children: [
-    
           ContributionHeatmap(
             heatmapColor: selectedColor,
             showMonthLabels: showMonthLabels,
@@ -211,10 +210,7 @@ ContributionHeatmap(
               print('Tapped: $date with $value contributions');
             },
           ),
-
           const Divider(),
-
-        
           ListTile(title: const Text('Cell Radius')),
           Wrap(
             spacing: 6,
@@ -231,9 +227,7 @@ ContributionHeatmap(
               );
             }),
           ),
-
           ListTile(title: const Text('Week Starts On')),
-
           Wrap(
             spacing: 6,
             children: List.generate(weekdays.length, (index) {
@@ -251,9 +245,7 @@ ContributionHeatmap(
               );
             }),
           ),
-
           ListTile(title: const Text('Select Heatmap Color')),
-
           Wrap(
             spacing: 10,
             runSpacing: 10,
@@ -300,10 +292,7 @@ ContributionHeatmap(
               );
             }),
           ),
-
           const SizedBox(height: 12),
-
-     
           SwitchListTile(
             title: const Text('Split Month View'),
             value: splitMonthView,
