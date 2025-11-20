@@ -5,6 +5,7 @@
 [![X (formerly Twitter) Follow](https://badgen.net/static/Follow/@abdullahPBD/blue?icon=twitter)](https://x.com/abdullahPDB)
 
 
+
 A high-performance, GitHub-like contribution heatmap widget for Flutter. This widget provides a visual representation of contribution data over time, similar to GitHub's contribution graph with proper i18n support and intelligent month separation.
 
 ![Contribution Heatmap minimal Screenshot](/example/screenshots/contribution_heatmap_minial.png)
@@ -36,9 +37,9 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ContributionHeatmap(
       entries: [
-        ContributionEntry(DateTime(2025, 8, 15), 5),
-        ContributionEntry(DateTime(2025, 8, 16), 3),
-        ContributionEntry(DateTime(2025, 8, 17), 8),
+        ContributionEntry(DateTime(2025, 11, 15), 5),
+        ContributionEntry(DateTime(2025, 11, 16), 3),
+        ContributionEntry(DateTime(2025, 11, 17), 8),
         // Add more entries...
       ],
       onCellTap: (date, value) {
@@ -84,69 +85,6 @@ ContributionHeatmap(
 )
 ```
 
-### Advanced Usage
-
-```dart
-ContributionHeatmap(
-  entries: myContributionData,
-  
-  // Custom date range
-  minDate: DateTime(2025, 1, 1),
-  maxDate: DateTime.now(),
-  splittedMonthView: true,   // Visual separation between months
-  showCellDate: true,        // NEW: Show date numbers in cells
-  
-  // Visual customization
-  cellSize: 16.0,
-  cellSpacing: 4.0,
-  cellRadius: 3.0,
-  padding: EdgeInsets.all(20),
-  
-  // Custom color scale
-  colorScale: (value) {
-    if (value == 0) return Colors.grey[100]!;
-    if (value <= 2) return Colors.green[200]!;
-    if (value <= 5) return Colors.green[400]!;
-    return Colors.green[600]!;
-  },
-  
-  // Custom text styles
-  monthTextStyle: TextStyle(
-    color: Colors.grey[600],
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-  ),
-  weekdayTextStyle: TextStyle(
-    color: Colors.grey[500],
-    fontSize: 11,
-  ),
-  cellDateTextStyle: TextStyle(   // NEW: Style for date numbers
-    fontSize: 8,
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-  ),
-  
-  // Week starts on Sunday (US style)
-  startWeekday: DateTime.sunday,
-  
-  // Handle cell interactions
-  onCellTap: (date, value) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('${date.toIso8601String().split('T')[0]}'),
-        content: Text('$value contributions on this date'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Close'),
-          ),
-        ],
-      ),
-    );
-  },
-)
-```
 
 ## 📊 Data Model
 
@@ -189,8 +127,8 @@ Exemple de Contribution Heatmap en français (fr-FR)
 |----------|------|---------|-------------|
 | `showMonthLabels` | `bool` | `true` | Show month names above the heatmap |
 | `showWeekdayLabels` | `bool` | `true` | Show day names on the left |
-| `showCellDate` | `bool` | `false` | **NEW!** Show date numbers inside cells |
-| `cellDateTextStyle` | `TextStyle?` | `null` | **NEW!** Custom style for cell date numbers |
+| `showCellDate` | `bool` | `false` |  Show date numbers inside cells |
+| `cellDateTextStyle` | `TextStyle?` | `null` | Custom style for cell date numbers |
 | `monthTextStyle` | `TextStyle?` | `null` | Custom style for month labels |
 | `weekdayTextStyle` | `TextStyle?` | `null` | Custom style for weekday labels |
 
@@ -202,13 +140,13 @@ Exemple de Contribution Heatmap en français (fr-FR)
 | `minDate` | `DateTime?` | `null` | Override minimum date (auto-calculated if null) |
 | `maxDate` | `DateTime?` | `null` | Override maximum date (auto-calculated if null) |
 | `startWeekday` | `int` | `DateTime.monday` | First day of week (1=Mon, 7=Sun) |
-| `splittedMonthView` | `bool` | `false` | **NEW!** Enable visual month separation |
+| `splittedMonthView` | `bool` | `false` |  Enable visual month separation |
 
 ### Colors & Interaction
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `colorScale` | `Color Function(int)?` | `null` | Custom color mapping function |
+| `heatmapColor` | `HeatmapColor` | `green` | **NEW!** Available color schemes for the contribution heatmap. |
 | `onCellTap` | `void Function(DateTime, int)?` | `null` | Callback for cell tap events |
 
 ## ⚡ Performance Characteristics

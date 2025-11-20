@@ -45,26 +45,26 @@ class RenderContributionHeatmap extends RenderBox {
     void Function(DateTime date, int value)? onCellTap,
     required TextScaler textScaler,
     required Locale locale,
-  }) : _entries = entries,
-       _minDate = minDate,
-       _maxDate = maxDate,
-       _cellSize = cellSize,
-       _cellSpacing = cellSpacing,
-       _cellRadius = cellRadius,
-       _padding = padding,
-       _showMonthLabels = showMonthLabels,
-       _showWeekdayLabels = showWeekdayLabels,
-       _showCellDate = showCellDate,
-       _monthTextStyle = monthTextStyle,
-       _weekdayTextStyle = weekdayTextStyle,
-       _cellDateTextStyle = cellDateTextStyle,
-       _startWeekday = startWeekday,
-       _splittedMonthView = splittedMonthView,
-       _heatmapColor = heatmapColor,
-       //_colorScale = colorScale,
-       _onCellTap = onCellTap,
-       _textScaler = textScaler,
-       _locale = locale {
+  })  : _entries = entries,
+        _minDate = minDate,
+        _maxDate = maxDate,
+        _cellSize = cellSize,
+        _cellSpacing = cellSpacing,
+        _cellRadius = cellRadius,
+        _padding = padding,
+        _showMonthLabels = showMonthLabels,
+        _showWeekdayLabels = showWeekdayLabels,
+        _showCellDate = showCellDate,
+        _monthTextStyle = monthTextStyle,
+        _weekdayTextStyle = weekdayTextStyle,
+        _cellDateTextStyle = cellDateTextStyle,
+        _startWeekday = startWeekday,
+        _splittedMonthView = splittedMonthView,
+        _heatmapColor = heatmapColor,
+        //_colorScale = colorScale,
+        _onCellTap = onCellTap,
+        _textScaler = textScaler,
+        _locale = locale {
     // Initialize the data structures and prepare for rendering
     _rebuildIndex(); // Convert entries to fast lookup map
     _rebuildColorScale(); // Create dynamic color scale
@@ -496,8 +496,7 @@ class RenderContributionHeatmap extends RenderBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     final canvas = context.canvas;
-    final gridOrigin =
-        offset +
+    final gridOrigin = offset +
         Offset(_padding.left + _leftLabelWidth, _padding.top + _topLabelHeight);
 
     if (_showWeekdayLabels) {
@@ -528,12 +527,10 @@ class RenderContributionHeatmap extends RenderBox {
         locale: _locale,
       )..layout(maxWidth: _leftLabelWidth - 2);
 
-      final labelY =
-          gridOrigin.dy +
+      final labelY = gridOrigin.dy +
           row * (_cellSize + _cellSpacing) +
           (_cellSize - textPainter.height) / 2;
-      final labelX =
-          widgetOffset.dx +
+      final labelX = widgetOffset.dx +
           _padding.left +
           _leftLabelWidth -
           textPainter.width -
@@ -564,8 +561,7 @@ class RenderContributionHeatmap extends RenderBox {
       if (firstDateInColumn == null) continue;
 
       final month = firstDateInColumn.month;
-      final shouldShowLabel =
-          lastLabeledMonth != month &&
+      final shouldShowLabel = lastLabeledMonth != month &&
           HeatmapUtils.isFirstWeekdayOfMonth(firstDateInColumn);
 
       if (shouldShowLabel) {
