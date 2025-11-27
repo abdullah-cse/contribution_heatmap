@@ -3398,6 +3398,7 @@ class CompiledApp {
 "DateTime.sunday",
 "tight",
 "FlexFit.",
+"Cell Size",
 "Cell Radius",
 "Week Starts On",
 "Select Heatmap Color",
