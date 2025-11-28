@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'playground.dart';
+import 'playground_screen.dart';
 
 void main() {
   runApp(const MyApp());
