@@ -14,8 +14,8 @@ class PlaygroundScreen extends StatefulWidget {
 
 class _PlaygroundScreenState extends State<PlaygroundScreen> {
   late List<ContributionEntry> entries;
-  List<int> cellSizes = [14, 16, 18, 22, 24, 28, 32];
-  double defaultCellSize = 16;
+  List<int> cellSizes = [14, 16, 18, 20, 22, 24];
+  double defaultCellSize = 18;
 
   double cellSpacing = 4;
 
@@ -88,7 +88,7 @@ ContributionHeatmap(
   showCellDate: $showCellDate,
   startWeekday: $startWeekdayLiteral,
   cellRadius: ${defaultRadius.toDouble()},
-  cellSize: ${defaultCellSize.toInt()},
+  cellSize: ${defaultCellSize.toDouble()},
   minDate: DateTime(${minDate.year}, ${minDate.month}, ${minDate.day}),
   maxDate: DateTime.now(),
   entries: entries,
@@ -202,7 +202,7 @@ ContributionHeatmap(
             showCellDate: showCellDate,
             startWeekday: startWeekday,
             cellRadius: defaultRadius.toDouble(),
-            cellSize: 14,
+            cellSize: defaultCellSize.toDouble(),
             minDate: DateTime(now.year, now.month - 6, now.day),
             maxDate: DateTime.now(),
             entries: entries,
@@ -211,6 +211,22 @@ ContributionHeatmap(
             },
           ),
           const Divider(),
+          ListTile(title: const Text('Cell Size')),
+          Wrap(
+            spacing: 6,
+            children: List.generate(cellSizes.length, (index) {
+              final selectedSize = cellSizes[index];
+              return ChoiceChip(
+                label: Text('$selectedSize'),
+                selected: defaultCellSize == selectedSize,
+                onSelected: (_) {
+                  setState(() {
+                    defaultCellSize = selectedSize.toDouble();
+                  });
+                },
+              );
+            }),
+          ),
           ListTile(title: const Text('Cell Radius')),
           Wrap(
             spacing: 6,

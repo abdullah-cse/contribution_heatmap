@@ -23,6 +23,11 @@ A high-performance, GitHub-like contribution heatmap widget for Flutter. This wi
 - **💾 Memory Efficient**: Optimized data structures minimize memory usage and GC pressure
 - **🔧 Smart Invalidation**: Only recomputes what's needed, not on every frame
 
+## Visual Playground
+Visit our [Visual Playground](https://ch.abdullah.com.bd) Website, play with ContributionHeatmap, Copy the generated code, and seamlessly integrate them into your project. This is the quickest way! 🥰
+
+![ContributionHeatmap Playground](/example/screenshots/ch_playground.png)
+
 
 ## 🚀 Quick Start
 

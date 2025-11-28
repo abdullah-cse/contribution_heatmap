@@ -1,3 +1,6 @@
+/// Visit https://ch.abdullah.com.bd to play with ContributionHeatmap,
+/// Copy the generated code, and seamlessly integrate them into your
+///  project. This is the quickest way to get started.
 import 'package:flutter/material.dart';
 import 'package:contribution_heatmap/contribution_heatmap.dart';
 

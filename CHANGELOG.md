@@ -1,3 +1,8 @@
+## [0.4.2] - 2025-11-28
+
+- **feat(ui)**: Add [Visual Playground](https://ch.abdullah.com.bd) to try before using this package
+- **feat(ui)**: Add generating **Code Generation** to directly use from the playground.
+
 ## [0.4.1] - 2025-11-20
 
 - **feat(ui)**: Add Visual Playground to try before using this package
