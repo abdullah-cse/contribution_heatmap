@@ -24,7 +24,16 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
 
   bool splitMonthView = false;
   bool showCellDate = false;
-  bool showWeekdayLabels = true;
+  //----
+  WeekdayLabel selectedWeekdayLabel = WeekdayLabel.full; //Show Everyday Labels
+  final weekdayLabels = [
+    WeekdayLabel.none,
+    WeekdayLabel.githubLike,
+    WeekdayLabel.full,
+  ];
+  final weekdayLabelNames = ['None', 'GitHub-like', 'Full'];
+//----
+
   bool showMonthLabels = true;
   final List<String> weekdays = [
     'Mon',
@@ -83,7 +92,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
 ContributionHeatmap(
   heatmapColor: HeatmapColor.${selectedColor.name},
   showMonthLabels: $showMonthLabels,
-  showWeekdayLabels: $showWeekdayLabels,
+  weekdayLabel: $selectedWeekdayLabel,
   splittedMonthView: $splitMonthView,
   showCellDate: $showCellDate,
   startWeekday: $startWeekdayLiteral,
@@ -91,7 +100,7 @@ ContributionHeatmap(
   cellSize: ${defaultCellSize.toDouble()},
   minDate: DateTime(${minDate.year}, ${minDate.month}, ${minDate.day}),
   maxDate: DateTime.now(),
-  entries: entries,
+  entries: entries, // Only required parameter, other are optional
   onCellTap: (date, value) {
     print('Tapped: \$date with \$value contributions');
   },
@@ -197,7 +206,7 @@ ContributionHeatmap(
           ContributionHeatmap(
             heatmapColor: selectedColor,
             showMonthLabels: showMonthLabels,
-            showWeekdayLabels: showWeekdayLabels,
+            weekdayLabel: selectedWeekdayLabel,
             splittedMonthView: splitMonthView,
             showCellDate: showCellDate,
             startWeekday: startWeekday,
@@ -327,14 +336,21 @@ ContributionHeatmap(
               });
             },
           ),
-          SwitchListTile(
-            title: const Text('Show Weekday Labels'),
-            value: showWeekdayLabels,
-            onChanged: (v) {
-              setState(() {
-                showWeekdayLabels = v;
-              });
-            },
+          ListTile(title: const Text('Weekday Labels')),
+          Wrap(
+            spacing: 6,
+            children: List.generate(weekdayLabels.length, (index) {
+              final label = weekdayLabels[index];
+              return ChoiceChip(
+                label: Text(weekdayLabelNames[index]),
+                selected: selectedWeekdayLabel == label,
+                onSelected: (_) {
+                  setState(() {
+                    selectedWeekdayLabel = label;
+                  });
+                },
+              );
+            }),
           ),
           SwitchListTile(
             title: const Text('Show Month Labels'),

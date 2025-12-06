@@ -35,7 +35,7 @@ class ExampleHomePage extends StatelessWidget {
         child: ContributionHeatmap(
           heatmapColor: HeatmapColor.green,
           showMonthLabels: true,
-          showWeekdayLabels: false,
+          weekdayLabel: WeekdayLabel.full,
           startWeekday: DateTime.monday,
           cellRadius: 5,
           minDate: DateTime(2025, 4, 1), // Start date: March 1, 2025

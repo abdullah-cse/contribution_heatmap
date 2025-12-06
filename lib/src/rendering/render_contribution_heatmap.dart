@@ -1,7 +1,8 @@
 import 'dart:math' as math;
-import 'package:contribution_heatmap/src/enum/heatmap_color.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
+import '../enum/heatmap_color.dart';
+import '../enum/weekday_label.dart';
 import '../models/contribution_entry.dart';
 import '../utils/heatmap_utils.dart';
 
@@ -33,7 +34,7 @@ class RenderContributionHeatmap extends RenderBox {
     required double cellRadius,
     required EdgeInsets padding,
     required bool showMonthLabels,
-    required bool showWeekdayLabels,
+    required WeekdayLabel weekdayLabel,
     required bool showCellDate,
     required TextStyle monthTextStyle,
     required TextStyle weekdayTextStyle,
@@ -53,7 +54,7 @@ class RenderContributionHeatmap extends RenderBox {
         _cellRadius = cellRadius,
         _padding = padding,
         _showMonthLabels = showMonthLabels,
-        _showWeekdayLabels = showWeekdayLabels,
+        _weekdayLabel = weekdayLabel,
         _showCellDate = showCellDate,
         _monthTextStyle = monthTextStyle,
         _weekdayTextStyle = weekdayTextStyle,
@@ -153,11 +154,11 @@ class RenderContributionHeatmap extends RenderBox {
     }
   }
 
-  /// Whether to show weekday abbreviation labels to the left
-  bool _showWeekdayLabels;
-  set showWeekdayLabels(bool value) {
-    if (_showWeekdayLabels != value) {
-      _showWeekdayLabels = value;
+  /// Determines which weekday labels to display to the left of the heatmap
+  WeekdayLabel _weekdayLabel;
+  set weekdayLabel(WeekdayLabel value) {
+    if (_weekdayLabel != value) {
+      _weekdayLabel = value;
       markNeedsLayout(); // Affects left label space calculation
     }
   }
@@ -446,7 +447,8 @@ class RenderContributionHeatmap extends RenderBox {
 
   @override
   void performLayout() {
-    _leftLabelWidth = _showWeekdayLabels ? _measureWeekdayLabelsWidth() : 0;
+    _leftLabelWidth =
+        _weekdayLabel != WeekdayLabel.none ? _measureWeekdayLabelsWidth() : 0;
     _topLabelHeight = _showMonthLabels ? _measureMonthLabelHeight() : 0;
 
     // Step 2: Calculate core grid dimensions
@@ -476,10 +478,22 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Measures the horizontal space required for weekday labels.
   double _measureWeekdayLabelsWidth() {
+    if (_weekdayLabel == WeekdayLabel.none) return 0;
+
     final weekdayNames = HeatmapUtils.weekdayShortNames(_locale, _startWeekday);
+    final githubRows = _weekdayLabel == WeekdayLabel.githubLike
+        ? HeatmapUtils.githubLikeRows(_startWeekday)
+        : null;
+
     double maxWidth = 0;
 
-    for (final name in weekdayNames) {
+    for (int i = 0; i < weekdayNames.length; i++) {
+      // Skip if githubLike and this row shouldn't show
+      if (githubRows != null && !githubRows.contains(i)) {
+        continue;
+      }
+
+      final name = weekdayNames[i];
       final textPainter = TextPainter(
         text: TextSpan(text: name, style: _weekdayTextStyle),
         textDirection: TextDirection.ltr,
@@ -499,7 +513,7 @@ class RenderContributionHeatmap extends RenderBox {
     final gridOrigin = offset +
         Offset(_padding.left + _leftLabelWidth, _padding.top + _topLabelHeight);
 
-    if (_showWeekdayLabels) {
+    if (_weekdayLabel != WeekdayLabel.none) {
       _paintWeekdayLabels(canvas, offset, gridOrigin);
     }
 
@@ -517,8 +531,16 @@ class RenderContributionHeatmap extends RenderBox {
     Offset gridOrigin,
   ) {
     final weekdayNames = HeatmapUtils.weekdayShortNames(_locale, _startWeekday);
+    final githubRows = _weekdayLabel == WeekdayLabel.githubLike
+        ? HeatmapUtils.githubLikeRows(_startWeekday)
+        : null;
 
     for (int row = 0; row < 7; row++) {
+      // For githubLike, only show specific rows (Mon, Wed, Fri)
+      if (githubRows != null && !githubRows.contains(row)) {
+        continue;
+      }
+
       final name = weekdayNames[row];
       final textPainter = TextPainter(
         text: TextSpan(text: name, style: _weekdayTextStyle),

@@ -84,6 +84,30 @@ class HeatmapUtils {
     return [for (int i = 0; i < 7; i++) allNames[(i + rotateBy) % 7]];
   }
 
+  /// Returns the set of row indices that should display labels for GitHub-like mode.
+  static Set<int> githubLikeRows(int startWeekday) {
+    // GitHub shows: Monday, Wednesday, Friday
+    // We need to find which rows these fall on after rotation
+    final Set<int> githubDays = {
+      DateTime.monday,
+      DateTime.wednesday,
+      DateTime.friday
+    };
+    final Set<int> rowsToShow = {};
+
+    for (int row = 0; row < 7; row++) {
+      // Calculate which actual weekday this row represents
+      // startWeekday is at row 0, so we add the offset
+      final actualWeekday =
+          ((row + startWeekday - DateTime.monday) % 7) + DateTime.monday;
+
+      if (githubDays.contains(actualWeekday)) {
+        rowsToShow.add(row);
+      }
+    }
+    return rowsToShow;
+  }
+
   /// Returns localized month abbreviation.
   ///
   /// [month] - Month number (1–12)

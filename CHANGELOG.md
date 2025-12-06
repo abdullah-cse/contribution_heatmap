@@ -1,3 +1,30 @@
+## [0.5.0] - 2025-12-05
+
+- **feat(ui)**: Replace `showWeekdayLabels` boolean with `WeekdayLabel` enum
+- **breaking** The public API changed — the boolean option `showWeekdayLabels` has been removed and replaced with `weekdayLabel: WeekdayLabel`.
+
+
+**Before**
+
+```dart
+// Show day names on the left
+showWeekdayLabels: true,
+```
+**After**
+```dart
+// [WeekdayLabel.none] - No weekday labels are shown
+// [WeekdayLabel.githubLike] - GitHub-style: only Monday, Wednesday, Friday
+// [WeekdayLabel.full] - All weekday labels (Monday through Sunday)
+weekdayLabel: WeekdayLabel.full,
+```
+**Migration note:**
+
+| Property | Before | After |
+|---|---|---|
+| Weekday labels — hidden | `showWeekdayLabels: false` | `weekdayLabel: WeekdayLabel.none` |
+| Weekday labels — shown (all days) | `showWeekdayLabels: true` | `weekdayLabel: WeekdayLabel.full` |
+| GitHub-style labels (Mon, Wed, Fri) |  | `weekdayLabel: WeekdayLabel.githubLike`|
+
 ## [0.4.2] - 2025-11-28
 
 - **feat(ui)**: Add [Visual Playground](https://ch.abdullah.com.bd) to try before using this package

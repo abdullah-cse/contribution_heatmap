@@ -1,4 +1,5 @@
 import 'package:contribution_heatmap/src/enum/heatmap_color.dart';
+import 'package:contribution_heatmap/src/enum/weekday_label.dart';
 import 'package:flutter/widgets.dart';
 import '../models/contribution_entry.dart';
 import '../rendering/render_contribution_heatmap.dart';
@@ -13,7 +14,7 @@ import '../rendering/render_contribution_heatmap.dart';
 ///     ContributionEntry(DateTime(2025, 9, 6), 3),
 ///     // ... more entries
 ///   ],
-///   heatmapColor: HeatmapColor.blue, // Dynamic color scaling
+///   heatmapColor: HeatmapColor.green, // GitHub-style green
 ///   onCellTap: (date, value) {
 ///     print('Tapped: $date with $value contributions');
 ///   },
@@ -30,13 +31,12 @@ import '../rendering/render_contribution_heatmap.dart';
 /// )
 /// ```
 ///
-/// ## With Cell Dates and Green Theme:
+/// ## With GitHub-style Weekday Labels:
 /// ```dart
 /// ContributionHeatmap(
 ///   entries: entries,
-///   showCellDate: true, // Shows date numbers inside cells
-///   heatmapColor: HeatmapColor.green, // GitHub-style green
-///   cellDateTextStyle: TextStyle(fontSize: 8, color: Colors.white),
+///   weekdayLabel: WeekdayLabel.githubLike, // Show Mon, Wed, Fri only
+///   heatmapColor: HeatmapColor.green,
 /// )
 /// ```
 
@@ -112,13 +112,23 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// Defaults to true.
   final bool showMonthLabels;
 
-  /// Whether to show weekday labels to the left of the heatmap.
+  /// Determines which weekday labels to display to the left of the heatmap.
   ///
-  /// Weekday labels show abbreviated day names (Mon, Tue, etc.)
-  /// for each row, helping users understand the weekly pattern.
+  /// Options:
+  /// - [WeekdayLabel.none] - No weekday labels are shown
+  /// - [WeekdayLabel.githubLike] - GitHub-style: only Monday, Wednesday, Friday
+  /// - [WeekdayLabel.full] - All weekday labels (Monday through Sunday)
   ///
-  /// Defaults to true.
-  final bool showWeekdayLabels;
+  /// GitHub-style labeling provides a cleaner look while still giving users
+  /// reference points for the week structure.
+  ///
+  /// Example:
+  /// ```dart
+  /// weekdayLabel: WeekdayLabel.githubLike, // Show Mon, Wed, Fri
+  /// ```
+  ///
+  /// Defaults to [WeekdayLabel.full].
+  final WeekdayLabel weekdayLabel;
 
   /// Whether to show date numbers inside each cell.
   ///
@@ -241,23 +251,6 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// Defaults to DateTime.monday.
   final int startWeekday;
 
-  // // Previous default color scale function. isn't used anymore.
-  // /// Custom color scale function for mapping contribution values to colors.
-  // ///
-  // /// If provided, this function will be called for each cell to determine
-  // /// its color based on the contribution count. If null, uses a default
-  // /// GitHub-style green color scale.
-  // ///
-  // /// Example:
-  // /// ```dart
-  // /// colorScale: (value) {
-  // ///   if (value == 0) return Colors.grey[100]!;
-  // ///   if (value <= 2) return Colors.blue[200]!;
-  // ///   if (value <= 5) return Colors.blue[400]!;
-  // ///   return Colors.blue[600]!;
-  // /// },
-  // /// ```
-  // final Color Function(int value)? colorScale;
   /// Callback function called when a cell is tapped.
   ///
   /// Provides the date and contribution value for the tapped cell.
@@ -296,7 +289,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     this.cellRadius = 2,
     this.padding = const EdgeInsets.all(16),
     this.showMonthLabels = true,
-    this.showWeekdayLabels = true,
+    this.weekdayLabel = WeekdayLabel.full,
     this.showCellDate = false,
     this.splittedMonthView = false,
     this.heatmapColor = HeatmapColor.green,
@@ -304,7 +297,6 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     this.weekdayTextStyle,
     this.cellDateTextStyle,
     this.startWeekday = DateTime.monday,
-    // this.colorScale,
     this.onCellTap,
   }) : assert(
           startWeekday >= DateTime.monday && startWeekday <= DateTime.sunday,
@@ -341,7 +333,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       cellRadius: cellRadius,
       padding: padding,
       showMonthLabels: showMonthLabels,
-      showWeekdayLabels: showWeekdayLabels,
+      weekdayLabel: weekdayLabel,
       showCellDate: showCellDate,
       monthTextStyle: resolvedMonthStyle,
       weekdayTextStyle: resolvedWeekdayStyle,
@@ -349,7 +341,6 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       startWeekday: startWeekday,
       splittedMonthView: splittedMonthView,
       heatmapColor: heatmapColor,
-      // colorScale: colorScale,
       onCellTap: onCellTap,
       textScaler: textScaler,
       locale: locale,
@@ -389,7 +380,7 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       ..cellRadius = cellRadius
       ..padding = padding
       ..showMonthLabels = showMonthLabels
-      ..showWeekdayLabels = showWeekdayLabels
+      ..weekdayLabel = weekdayLabel
       ..showCellDate = showCellDate
       ..monthTextStyle = resolvedMonthStyle
       ..weekdayTextStyle = resolvedWeekdayStyle
@@ -397,7 +388,6 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       ..startWeekday = startWeekday
       ..splittedMonthView = splittedMonthView
       ..heatmapColor = heatmapColor
-      // ..colorScale = colorScale
       ..onCellTap = onCellTap
       ..textScaler = textScaler
       ..locale = locale;
