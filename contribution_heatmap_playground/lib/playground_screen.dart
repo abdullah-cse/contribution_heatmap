@@ -216,7 +216,7 @@ ContributionHeatmap(
             maxDate: DateTime.now(),
             entries: entries,
             onCellTap: (date, value) {
-              print('Tapped: $date with $value contributions');
+              debugPrint('Tapped: $date with $value contributions');
             },
           ),
           const Divider(),

@@ -1,3 +1,9 @@
+## [0.5.1] - 2025-12-12
+
+- **feat(test)**: Add Test
+- **feat(ci)**: Add Code Coverage Metrics to Build Trust in Code Quality
+- **fix(readme)**: Add Code Coverage badge.
+
 ## [0.5.0] - 2025-12-05
 
 - **feat(ui)**: Replace `showWeekdayLabels` boolean with `WeekdayLabel` enum
