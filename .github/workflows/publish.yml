@@ -3,34 +3,10 @@ name: Publish to pub.dev
 on:
   push:
     tags:
-    # must align with the tag-pattern configured on pub.dev
-    - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   publish:
     permissions:
-      id-token: write # Required for authentication using OIDC
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      # Set up the Dart SDK to provision the OIDC token.
-      # Explicitly specifying 'stable' ensures it doesn't try to download a 'flutter' version.
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: stable
-
-      # Set up the Flutter SDK as this is a Flutter package.
-      # This shadows the dart binary from setup-dart, which is intended.
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Publish - dry run
-        run: flutter pub publish --dry-run
-
-      - name: Publish to pub.dev
-        run: flutter pub publish --force
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
