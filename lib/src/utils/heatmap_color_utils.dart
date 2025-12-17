@@ -108,152 +108,152 @@ class HeatmapColorUtils {
     switch (heatmapColor) {
       case HeatmapColor.blue:
         return [
-          const Color(0xFFE3F2FD), // 0% - Very light blue
-          const Color(0xFFBBDEFB), // 10%
-          const Color(0xFF90CAF9), // 20%
-          const Color(0xFF64B5F6), // 30%
-          const Color(0xFF42A5F5), // 40%
-          const Color(0xFF2196F3), // 50%
-          const Color(0xFF1E88E5), // 60%
-          const Color(0xFF1976D2), // 70%
-          const Color(0xFF1565C0), // 80%
-          const Color(0xFF0D47A1), // 90%
-          const Color(0xFF0A3A8A), // 100% - Very dark blue
+          const Color(0xFFE3F2FD), // 0%
+          const Color(0xFFCEE4F7), // 10%
+          const Color(0xFFBAD6F1), // 20%
+          const Color(0xFFA5C8EB), // 30%
+          const Color(0xFF91BAE5), // 40%
+          const Color(0xFF7CACDF), // 50%
+          const Color(0xFF679DD8), // 60%
+          const Color(0xFF538FD2), // 70%
+          const Color(0xFF3E81CC), // 80%
+          const Color(0xFF2A73C6), // 90%
+          const Color(0xFF1565C0), // 100%
         ];
 
       case HeatmapColor.green:
         return [
           const Color(0xFFE8F5E8), // 0%
-          const Color(0xFFC8E6C9), // 10%
-          const Color(0xFFA5D6A7), // 20%
-          const Color(0xFF81C784), // 30%
-          const Color(0xFF66BB6A), // 40%
-          const Color(0xFF4CAF50), // 50%
-          const Color(0xFF43A047), // 60%
-          const Color(0xFF388E3C), // 70%
-          const Color(0xFF2E7D32), // 80%
-          const Color(0xFF1B5E20), // 90%
-          const Color(0xFF0D4F14), // 100%
+          const Color(0xFFD5E9D6), // 10%
+          const Color(0xFFC3DDC4), // 20%
+          const Color(0xFFB0D1B1), // 30%
+          const Color(0xFF9EC59F), // 40%
+          const Color(0xFF8BB98D), // 50%
+          const Color(0xFF78AD7B), // 60%
+          const Color(0xFF66A169), // 70%
+          const Color(0xFF539556), // 80%
+          const Color(0xFF418944), // 90%
+          const Color(0xFF2E7D32), // 100%
         ];
 
       case HeatmapColor.purple:
         return [
           const Color(0xFFF3E5F5), // 0%
-          const Color(0xFFE1BEE7), // 10%
-          const Color(0xFFCE93D8), // 20%
-          const Color(0xFFBA68C8), // 30%
-          const Color(0xFFAB47BC), // 40%
-          const Color(0xFF9C27B0), // 50%
-          const Color(0xFF8E24AA), // 60%
-          const Color(0xFF7B1FA2), // 70%
-          const Color(0xFF6A1B9A), // 80%
-          const Color(0xFF4A148C), // 90%
-          const Color(0xFF3A1070), // 100%
+          const Color(0xFFE5D1EC), // 10%
+          const Color(0xFFD8BDE3), // 20%
+          const Color(0xFFCAA8DA), // 30%
+          const Color(0xFFBC94D1), // 40%
+          const Color(0xFFAF80C8), // 50%
+          const Color(0xFFA16CBE), // 60%
+          const Color(0xFF9358B5), // 70%
+          const Color(0xFF8543AC), // 80%
+          const Color(0xFF782FA3), // 90%
+          const Color(0xFF6A1B9A), // 100%
         ];
 
       case HeatmapColor.red:
         return [
           const Color(0xFFFFEBEE), // 0%
-          const Color(0xFFFFCDD2), // 10%
-          const Color(0xFFEF9A9A), // 20%
-          const Color(0xFFE57373), // 30%
-          const Color(0xFFEF5350), // 40%
-          const Color(0xFFF44336), // 50%
-          const Color(0xFFE53935), // 60%
-          const Color(0xFFD32F2F), // 70%
-          const Color(0xFFC62828), // 80%
-          const Color(0xFFB71C1C), // 90%
-          const Color(0xFF8B1A1A), // 100%
+          const Color(0xFFF9D8DA), // 10%
+          const Color(0xFFF4C4C6), // 20%
+          const Color(0xFFEEB1B3), // 30%
+          const Color(0xFFE89D9F), // 40%
+          const Color(0xFFE38A8B), // 50%
+          const Color(0xFFDD7677), // 60%
+          const Color(0xFFD76363), // 70%
+          const Color(0xFFD14F50), // 80%
+          const Color(0xFFCC3C3C), // 90%
+          const Color(0xFFC62828), // 100%
         ];
 
       case HeatmapColor.orange:
         return [
-          const Color(0xFFFFE4BC), // 0% - Matches your existing color
-          const Color(0xFFFFCC80), // 10%
-          const Color(0xFFFFB74D), // 20%
-          const Color(0xFFFFA726), // 30%
-          const Color(0xFFFF9800), // 40%
-          const Color(0xFFFB8C00), // 50%
-          const Color(0xFFF57C00), // 60%
-          const Color(0xFFEF6C00), // 70%
-          const Color(0xFFE65100), // 80%
-          const Color(0xFFBF360C), // 90%
-          const Color(0xFF8D2600), // 100%
+          const Color(0xFFFFE4BC), // 0%
+          const Color(0xFFFDD5A9), // 10%
+          const Color(0xFFFAC796), // 20%
+          const Color(0xFFF8B884), // 30%
+          const Color(0xFFF5A971), // 40%
+          const Color(0xFFF39B5E), // 50%
+          const Color(0xFFF08C4B), // 60%
+          const Color(0xFFEE7D38), // 70%
+          const Color(0xFFEB6E26), // 80%
+          const Color(0xFFE96013), // 90%
+          const Color(0xFFE65100), // 100%
         ];
 
       case HeatmapColor.teal:
         return [
           const Color(0xFFE0F2F1), // 0%
-          const Color(0xFFB2DFDB), // 10%
-          const Color(0xFF80CBC4), // 20%
-          const Color(0xFF4DB6AC), // 30%
-          const Color(0xFF26A69A), // 40%
-          const Color(0xFF009688), // 50%
-          const Color(0xFF00897B), // 60%
-          const Color(0xFF00796B), // 70%
-          const Color(0xFF00695C), // 80%
-          const Color(0xFF004D40), // 90%
-          const Color(0xFF003530), // 100%
+          const Color(0xFFCAE4E2), // 10%
+          const Color(0xFFB3D7D3), // 20%
+          const Color(0xFF9DC9C4), // 30%
+          const Color(0xFF86BBB5), // 40%
+          const Color(0xFF70AEA7), // 50%
+          const Color(0xFF5AA098), // 60%
+          const Color(0xFF439289), // 70%
+          const Color(0xFF2D847A), // 80%
+          const Color(0xFF16776B), // 90%
+          const Color(0xFF00695C), // 100%
         ];
 
       case HeatmapColor.pink:
         return [
           const Color(0xFFFCE4EC), // 0%
-          const Color(0xFFF8BBD9), // 10%
-          const Color(0xFFF48FB1), // 20%
-          const Color(0xFFF06292), // 30%
-          const Color(0xFFEC407A), // 40%
-          const Color(0xFFE91E63), // 50%
-          const Color(0xFFD81B60), // 60%
-          const Color(0xFFC2185B), // 70%
-          const Color(0xFFAD1457), // 80%
-          const Color(0xFF880E4F), // 90%
-          const Color(0xFF6A0B3D), // 100%
+          const Color(0xFFF4CFDD), // 10%
+          const Color(0xFFECBACE), // 20%
+          const Color(0xFFE4A6BF), // 30%
+          const Color(0xFFDC91B0), // 40%
+          const Color(0xFFD57CA2), // 50%
+          const Color(0xFFCD6793), // 60%
+          const Color(0xFFC55284), // 70%
+          const Color(0xFFBD3E75), // 80%
+          const Color(0xFFB52966), // 90%
+          const Color(0xFFAD1457), // 100%
         ];
 
       case HeatmapColor.indigo:
         return [
           const Color(0xFFE8EAF6), // 0%
-          const Color(0xFFC5CAE9), // 10%
-          const Color(0xFF9FA8DA), // 20%
-          const Color(0xFF7986CB), // 30%
-          const Color(0xFF5C6BC0), // 40%
-          const Color(0xFF3F51B5), // 50%
-          const Color(0xFF3949AB), // 60%
-          const Color(0xFF303F9F), // 70%
-          const Color(0xFF283593), // 80%
-          const Color(0xFF1A237E), // 90%
-          const Color(0xFF141B65), // 100%
+          const Color(0xFFD5D8EC), // 10%
+          const Color(0xFFC2C6E2), // 20%
+          const Color(0xFFAEB4D8), // 30%
+          const Color(0xFF9BA2CE), // 40%
+          const Color(0xFF8890C5), // 50%
+          const Color(0xFF757DBB), // 60%
+          const Color(0xFF626BB1), // 70%
+          const Color(0xFF4E59A7), // 80%
+          const Color(0xFF3B479D), // 90%
+          const Color(0xFF283593), // 100%
         ];
 
       case HeatmapColor.amber:
         return [
           const Color(0xFFFFF8E1), // 0%
-          const Color(0xFFFFECB3), // 10%
-          const Color(0xFFFFE082), // 20%
-          const Color(0xFFFFD54F), // 30%
-          const Color(0xFFFFCA28), // 40%
-          const Color(0xFFFFC107), // 50%
-          const Color(0xFFFFB300), // 60%
-          const Color(0xFFFFA000), // 70%
-          const Color(0xFFFF8F00), // 80%
-          const Color(0xFFFF6F00), // 90%
-          const Color(0xFFE65100), // 100%
+          const Color(0xFFFFEECB), // 10%
+          const Color(0xFFFFE3B4), // 20%
+          const Color(0xFFFFD99E), // 30%
+          const Color(0xFFFFCE87), // 40%
+          const Color(0xFFFFC471), // 50%
+          const Color(0xFFFFB95A), // 60%
+          const Color(0xFFFFAF44), // 70%
+          const Color(0xFFFFA42D), // 80%
+          const Color(0xFFFF9A17), // 90%
+          const Color(0xFFFF8F00), // 100%
         ];
 
       case HeatmapColor.cyan:
         return [
           const Color(0xFFE0F7FA), // 0%
-          const Color(0xFFB2EBF2), // 10%
-          const Color(0xFF80DEEA), // 20%
-          const Color(0xFF4DD0E1), // 30%
-          const Color(0xFF26C6DA), // 40%
-          const Color(0xFF00BCD4), // 50%
-          const Color(0xFF00ACC1), // 60%
-          const Color(0xFF0097A7), // 70%
-          const Color(0xFF00838F), // 80%
-          const Color(0xFF006064), // 90%
-          const Color(0xFF004D52), // 100%
+          const Color(0xFFCAEBEF), // 10%
+          const Color(0xFFB3E0E5), // 20%
+          const Color(0xFF9DD4DA), // 30%
+          const Color(0xFF86C9CF), // 40%
+          const Color(0xFF70BDC5), // 50%
+          const Color(0xFF5AB1BA), // 60%
+          const Color(0xFF43A6AF), // 70%
+          const Color(0xFF2D9AA4), // 80%
+          const Color(0xFF168F9A), // 90%
+          const Color(0xFF00838F), // 100%
         ];
     }
   }

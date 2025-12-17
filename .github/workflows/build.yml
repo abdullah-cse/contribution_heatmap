@@ -1,8 +1,9 @@
-name: Flutter CI
+name: Build
 
 on:
   push:
     branches: [ "main" ]
+    tags: [ "v*" ]
   pull_request:
     branches: [ "main" ]
 

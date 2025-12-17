@@ -1,3 +1,10 @@
+## [0.5.2] - 2025-12-17
+
+- **feat(cd)**: Add publishing from github action.
+- **feat(test)**: Add Heatmap color test.
+- **fix(heatmap_color)**: Heatmap colors improved.
+- **fix(readme)**: Add `Build` badge.
+  
 ## [0.5.1] - 2025-12-12
 
 - **feat(test)**: Add Test

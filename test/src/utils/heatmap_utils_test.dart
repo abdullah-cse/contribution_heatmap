@@ -57,13 +57,18 @@ void main() {
       expect(HeatmapUtils.isFirstWeekdayOfMonth(DateTime(2024, 1, 2)), true);
       expect(HeatmapUtils.isFirstWeekdayOfMonth(DateTime(2024, 1, 15)), false);
     });
-/*
-    test('defaultColorScale returns correct color', () {
-      expect(HeatmapUtils.defaultColorScale(0), const Color(0xFFFFE4BC));
-      expect(HeatmapUtils.defaultColorScale(1), isA<Color>());
-      expect(HeatmapUtils.defaultColorScale(10), isA<Color>());
-      expect(HeatmapUtils.defaultColorScale(100), isA<Color>());
+    test('githubLikeRows returns correct rows for Monday start', () {
+      final rows = HeatmapUtils.githubLikeRows(DateTime.monday);
+      // Monday (0), Wednesday (2), Friday (4) when starting on Monday
+      expect(rows, containsAll([0, 2, 4]));
+      expect(rows.length, 3);
     });
-*/
+
+    test('githubLikeRows returns correct rows for Sunday start', () {
+      final rows = HeatmapUtils.githubLikeRows(DateTime.sunday);
+      // Monday (1), Wednesday (3), Friday (5) when starting on Sunday
+      expect(rows, containsAll([1, 3, 5]));
+      expect(rows.length, 3);
+    });
   });
 }
