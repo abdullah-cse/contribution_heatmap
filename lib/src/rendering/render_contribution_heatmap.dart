@@ -78,6 +78,7 @@ class RenderContributionHeatmap extends RenderBox {
   /// the minimum required operations (layout vs paint vs both).
   /// Raw contribution data entries to display in the heatmap
   List<ContributionEntry> _entries;
+  List<ContributionEntry> get entries => _entries;
   set entries(List<ContributionEntry> value) {
     if (!identical(_entries, value)) {
       _entries = value;
@@ -90,6 +91,7 @@ class RenderContributionHeatmap extends RenderBox {
   /// Optional explicit minimum date boundary
   /// If null, computed from entry data
   DateTime? _minDate;
+  DateTime? get minDate => _minDate;
   set minDate(DateTime? value) {
     if (_minDate != value) {
       _minDate = value;
@@ -101,6 +103,7 @@ class RenderContributionHeatmap extends RenderBox {
   /// Optional explicit maximum date boundary
   /// If null, computed from entry data
   DateTime? _maxDate;
+  DateTime? get maxDate => _maxDate;
   set maxDate(DateTime? value) {
     if (_maxDate != value) {
       _maxDate = value;
@@ -111,6 +114,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Size of each contribution cell in logical pixels
   double _cellSize;
+  double get cellSize => _cellSize;
   set cellSize(double value) {
     if (_cellSize != value) {
       _cellSize = value;
@@ -120,6 +124,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Spacing between cells in logical pixels
   double _cellSpacing;
+  double get cellSpacing => _cellSpacing;
   set cellSpacing(double value) {
     if (_cellSpacing != value) {
       _cellSpacing = value;
@@ -129,6 +134,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Corner radius for rounded rectangle cells
   double _cellRadius;
+  double get cellRadius => _cellRadius;
   set cellRadius(double value) {
     if (_cellRadius != value) {
       _cellRadius = value;
@@ -138,6 +144,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Padding around the entire heatmap widget
   EdgeInsets _padding;
+  EdgeInsets get padding => _padding;
   set padding(EdgeInsets value) {
     if (_padding != value) {
       _padding = value;
@@ -147,6 +154,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Whether to show month abbreviation labels above the grid
   bool _showMonthLabels;
+  bool get showMonthLabels => _showMonthLabels;
   set showMonthLabels(bool value) {
     if (_showMonthLabels != value) {
       _showMonthLabels = value;
@@ -156,6 +164,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Determines which weekday labels to display to the left of the heatmap
   WeekdayLabel _weekdayLabel;
+  WeekdayLabel get weekdayLabel => _weekdayLabel;
   set weekdayLabel(WeekdayLabel value) {
     if (_weekdayLabel != value) {
       _weekdayLabel = value;
@@ -165,6 +174,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Whether to show date numbers inside each contribution cell
   bool _showCellDate;
+  bool get showCellDate => _showCellDate;
   set showCellDate(bool value) {
     if (_showCellDate != value) {
       _showCellDate = value;
@@ -202,6 +212,7 @@ class RenderContributionHeatmap extends RenderBox {
   /// First day of the week (1=Monday through 7=Sunday)
   /// This determines how the grid columns are aligned with calendar weeks
   int _startWeekday;
+  int get startWeekday => _startWeekday;
   set startWeekday(int value) {
     if (_startWeekday != value) {
       _startWeekday = value;
@@ -213,6 +224,7 @@ class RenderContributionHeatmap extends RenderBox {
   /// Whether to add visual separation (empty columns) between months
   /// This is the core feature that creates month boundaries
   bool _splittedMonthView;
+  bool get splittedMonthView => _splittedMonthView;
   set splittedMonthView(bool value) {
     if (_splittedMonthView != value) {
       _splittedMonthView = value;
@@ -233,6 +245,7 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Color scheme for the heatmap cells
   HeatmapColor _heatmapColor;
+  HeatmapColor get heatmapColor => _heatmapColor;
   set heatmapColor(HeatmapColor value) {
     if (_heatmapColor != value) {
       _heatmapColor = value;
