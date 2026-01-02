@@ -1,3 +1,8 @@
+## [0.5.3] - 2026-01-02
+
+- **feat(test)**: Add widget tests for `ContributionHeatmap`.
+
+
 ## [0.5.2] - 2025-12-17
 
 - **feat(cd)**: Add publishing from github action.
