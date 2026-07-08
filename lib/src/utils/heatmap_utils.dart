@@ -159,9 +159,14 @@ class HeatmapUtils {
   /// ```
   static Color Function(int value) createDynamicColorScale(
     List<ContributionEntry> entries,
-    HeatmapColor heatmapColor,
-  ) {
-    return HeatmapColorUtils.createColorScale(entries, heatmapColor);
+    HeatmapColor heatmapColor, {
+    Color? customColor,
+  }) {
+    return HeatmapColorUtils.createColorScale(
+      entries,
+      heatmapColor,
+      customColor: customColor,
+    );
   }
 }
 

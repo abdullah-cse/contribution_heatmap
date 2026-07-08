@@ -33,7 +33,15 @@ class ExampleHomePage extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: ContributionHeatmap(
-          heatmapColor: HeatmapColor.green,
+          // You can use either heatmapColor or customColor or customColorScale to customize the color of the heatmap.
+          // heatmapColor: HeatmapColor.orange,
+          // customColor: Colors.purple,
+          customColorScale: (value) {
+            if (value == 0) return Colors.grey[200]!;
+            if (value < 5) return Colors.blue[300]!;
+            return Colors.blue[700]!;
+          },
+
           showMonthLabels: true,
           weekdayLabel: WeekdayLabel.githubLike,
           startWeekday: DateTime.monday,

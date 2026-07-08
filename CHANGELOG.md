@@ -1,3 +1,10 @@
+## [0.6.0] - 2026-07-08
+
+- **feat**: Add `customColor` support to use a single base color to generate a custom 11-step color scale.
+- **feat**: Add `customColorScale` to allow mapping contribution values directly to colors via a custom callback function.
+- **feat**: Support for mutually exclusive color options: a user can only provide one of `heatmapColor`, `customColor`, or `customColorScale` (otherwise an assertion is thrown). `heatmapColor` (defaulting to green) serves as the default fallback option when no custom configuration is supplied.
+- **feat(test)**: Add widget tests for verification of custom colors.
+
 ## [0.5.3] - 2026-01-02
 
 - **feat(test)**: Add widget tests for `ContributionHeatmap`.
