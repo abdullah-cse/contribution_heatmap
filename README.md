@@ -10,15 +10,15 @@ A high-performance, GitHub-like contribution heatmap widget for Flutter. This wi
 
 ## ✨ Features
 
-- **🚀 Ultra-High Performance**: Custom RenderBox implementation with optimized rendering pipeline
-- **👆 Interactive**: Full tap support with proper hit testing and gesture handling
-- **🎨 Fully Customizable**: Colors, sizing, labels, and layout options
-- **📅 Split Month View**: Visual month separation with intelligent empty cell insertion
-- **📊 Cell Date Display**: NEW! Show day numbers inside contribution cells
+- **Ultra-High Performance**: Custom RenderBox implementation with optimized rendering pipeline
+- **Interactive**: Full tap support with proper hit testing and gesture handling
+- **Fully Customizable**: Colors, sizing, labels, and layout options
+- **Split Month View**: Visual month separation with intelligent empty cell insertion
+- **Cell Date Display**: NEW! Show day numbers inside contribution cells
 - **♿ Accessibility Ready**: Supports text scaling and high contrast modes
-- **🌍 Internationalized**: Locale-aware text rendering with customizable start weekdays  
-- **💾 Memory Efficient**: Optimized data structures minimize memory usage and GC pressure
-- **🔧 Smart Invalidation**: Only recomputes what's needed, not on every frame
+- **Internationalized**: Locale-aware text rendering with customizable start weekdays  
+- **Memory Efficient**: Optimized data structures minimize memory usage and GC pressure
+- **Smart Invalidation**: Only recomputes what's needed, not on every frame
 
 ## Visual Playground
 Visit our [Visual Playground](https://ch.abdullah.com.bd) Website, play with ContributionHeatmap, copy the generated code, and seamlessly integrate it into your project. This is the quickest way! 🥰
@@ -65,18 +65,43 @@ class ContributionEntry {
 }
 ```
 
-## 🌍 i18n Support
-Currently, this package supports English (EN) and:
-- 🇫🇷 French (fr-FR)
-- 🇩🇪 German (de-DE)
-- 🇪🇸 Spanish (es-ES)
+## How Coloring Works?
 
-More languages will be added soon.
+You can fully control the colors of the heatmap. Note that **you can only choose one of the 3 options below** (they are mutually exclusive):
 
-Exemple de Contribution Heatmap en français (fr-FR)
-![Exemple de Contribution Heatmap en français (fr-FR)](/example/screenshots/fr-FR.png)
+### 1. Predefined Color Schemes (`heatmapColor`)
 
-## 🎨 Customization Options
+We provide some predefined colors as `heatmapColor`. You can use any of them (defaults to green like Github):
+```dart
+ContributionHeatmap(
+  entries: entries,
+  heatmapColor: HeatmapColor.green,
+)
+```
+
+### 2. Custom Brand Base Color (`customColor`)
+If you think the pre-defined heatmap color isn't enough for your brand needs, provide a single custom color (e.g., your brand color), and the package will automatically generate a matching 11-step intensity scale:
+```dart
+ContributionHeatmap(
+  entries: entries,
+  customColor: Colors.deepPurple,
+)
+```
+
+### 3. Full Control with (`customColorScale`) (Advance)
+This option is totally up to you. You define exactly which color to return for any given contribution count:
+```dart
+ContributionHeatmap(
+  entries: entries,
+  customColorScale: (value) {
+    if (value == 0) return Colors.grey[200]!;
+    if (value < 5) return Colors.blue[300]!;
+    return Colors.blue[700]!;
+  },
+)
+```
+
+## ⚙️ Customization Options
 
 ### Visual Properties
 
@@ -111,8 +136,22 @@ Exemple de Contribution Heatmap en français (fr-FR)
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `heatmapColor` | `HeatmapColor` | `green` | Available color schemes for the contribution heatmap. |
+| `heatmapColor` | `HeatmapColor?` | `null` (falls back to `green`) | Available color schemes for the contribution heatmap. Mutually exclusive with `customColor` and `customColorScale`. |
+| `customColor` | `Color?` | `null` | Base brand color to generate an 11-step intensity scale. Mutually exclusive with `heatmapColor` and `customColorScale`. |
+| `customColorScale` | `Color Function(int)?` | `null` | Function to map contribution values directly to colors. Mutually exclusive with `heatmapColor` and `customColor`. |
 | `onCellTap` | `void Function(DateTime, int)?` | `null` | Callback for cell tap events |
+
+
+## 🌍 i18n Support
+Currently, this package supports English (EN) and:
+- 🇫🇷 French (fr-FR)
+- 🇩🇪 German (de-DE)
+- 🇪🇸 Spanish (es-ES)
+
+More languages will be added soon.
+
+Exemple de Contribution Heatmap en français (fr-FR)
+![Exemple de Contribution Heatmap en français (fr-FR)](/example/screenshots/fr-FR.png)
 
 ## ⚡ Performance Characteristics
 

@@ -19,8 +19,9 @@ class HeatmapColorUtils {
   /// Returns a function that maps contribution values to colors
   static Color Function(int value) createColorScale(
     List<ContributionEntry> entries,
-    HeatmapColor heatmapColor,
-  ) {
+    HeatmapColor heatmapColor, {
+    Color? customColor,
+  }) {
     // Find the maximum contribution value in the dataset
     final maxValue = entries.isEmpty
         ? 0
@@ -28,11 +29,17 @@ class HeatmapColorUtils {
 
     // If no contributions exist, return a function that always returns the base color
     if (maxValue <= 0) {
+      if (customColor != null) {
+        final colorPalette = _getCustomColorPalette(customColor);
+        return (int value) => colorPalette[0];
+      }
       return (int value) => _getColorAtIntensity(heatmapColor, 0);
     }
 
-    // Get the color palette for the selected scheme
-    final colorPalette = _getColorPalette(heatmapColor);
+    // Get the color palette for the selected scheme or custom color
+    final colorPalette = customColor != null
+        ? _getCustomColorPalette(customColor)
+        : _getColorPalette(heatmapColor);
 
     return (int value) {
       // Handle zero contributions
@@ -61,22 +68,33 @@ class HeatmapColorUtils {
     List<ContributionEntry> entries,
     HeatmapColor heatmapColor, {
     bool usePercentiles = false,
+    Color? customColor,
   }) {
     if (entries.isEmpty) {
+      if (customColor != null) {
+        final colorPalette = _getCustomColorPalette(customColor);
+        return (int value) => colorPalette[0];
+      }
       return (int value) => _getColorAtIntensity(heatmapColor, 0);
     }
 
     final values = entries.map((e) => e.count).where((v) => v > 0).toList();
     if (values.isEmpty) {
+      if (customColor != null) {
+        final colorPalette = _getCustomColorPalette(customColor);
+        return (int value) => colorPalette[0];
+      }
       return (int value) => _getColorAtIntensity(heatmapColor, 0);
     }
 
     values.sort();
-    final colorPalette = _getColorPalette(heatmapColor);
+    final colorPalette = customColor != null
+        ? _getCustomColorPalette(customColor)
+        : _getColorPalette(heatmapColor);
 
     if (!usePercentiles) {
       // Use the simpler linear scaling approach
-      return createColorScale(entries, heatmapColor);
+      return createColorScale(entries, heatmapColor, customColor: customColor);
     }
 
     // Calculate percentile thresholds
@@ -101,6 +119,42 @@ class HeatmapColorUtils {
 
       return colorPalette[colorIndex];
     };
+  }
+
+  /// Generates a palette of 11 colors from a single custom color.
+  /// It creates lighter shades for lower intensities (0-40%), the base color
+  /// around the middle (50-60%), and darker shades for higher intensities (70-100%).
+  static List<Color> _getCustomColorPalette(Color baseColor) {
+    final hsl = HSLColor.fromColor(baseColor);
+
+    // We want 11 colors (0% to 100%)
+    return List.generate(11, (index) {
+      if (index == 0) {
+        // 0% - very light, almost white
+        return hsl.withLightness(0.95).toColor();
+      }
+
+      // Calculate how much we should adjust the lightness.
+      // 0 represents index 0 (lightest), 10 represents index 10 (darkest).
+      // If we assume the base color is around index 6 (60% intensity).
+
+      final normalizedIndex = index / 10.0; // 0.1 to 1.0
+
+      // Interpolate lightness.
+      // For index 1 (0.1), we want lightness around 0.9.
+      // For index 10 (1.0), we want lightness to be darker than base,
+      // but not completely black. Let's say 0.2 to 0.4 depending on base.
+
+      // A simple linear interpolation for lightness:
+      // Index 1 (0.1) -> Lightness 0.9
+      // Index 10 (1.0) -> Lightness 0.3
+      final targetLightness = 0.95 - (normalizedIndex * 0.65);
+
+      // Blend the target lightness with the original color's lightness
+      // to keep some of the original character.
+      // The higher the index, the closer to the target lightness.
+      return hsl.withLightness(targetLightness.clamp(0.1, 0.98)).toColor();
+    });
   }
 
   /// Returns a palette of 11 colors (0% to 100% intensity) for the given color scheme.

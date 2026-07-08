@@ -202,7 +202,32 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
   /// ```
   ///
   /// Defaults to [HeatmapColor.green] for GitHub-style appearance.
-  final HeatmapColor heatmapColor;
+  /// Defaults to [HeatmapColor.green] if no color option is provided.
+  final HeatmapColor? heatmapColor;
+
+  /// Optional custom color to use as the base for the heatmap palette.
+  ///
+  /// If provided, this color will be used to generate a dynamic 11-step color scale,
+  /// ignoring the [heatmapColor] parameter.
+  /// This allows using an exact brand color for the heatmap.
+  final Color? customColor;
+
+  /// Optional custom function to map contribution values directly to colors.
+  ///
+  /// This provides the ultimate flexibility, allowing you to define exactly
+  /// which color should be returned for any given contribution value.
+  ///
+  /// If provided, this function takes precedence over both [customColor] and [heatmapColor].
+  ///
+  /// Example:
+  /// ```dart
+  /// customColorScale: (value) {
+  ///   if (value == 0) return Colors.grey[200]!;
+  ///   if (value < 5) return Colors.blue[300]!;
+  ///   return Colors.blue[700]!;
+  /// }
+  /// ```
+  final Color Function(int value)? customColorScale;
 
   /// Text style for month labels.
   ///
@@ -292,15 +317,24 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
     this.weekdayLabel = WeekdayLabel.full,
     this.showCellDate = false,
     this.splittedMonthView = false,
-    this.heatmapColor = HeatmapColor.green,
+    this.heatmapColor,
+    this.customColor,
+    this.customColorScale,
     this.monthTextStyle,
     this.weekdayTextStyle,
     this.cellDateTextStyle,
     this.startWeekday = DateTime.monday,
     this.onCellTap,
-  }) : assert(
+  })  : assert(
           startWeekday >= DateTime.monday && startWeekday <= DateTime.sunday,
           'startWeekday must be between DateTime.monday (1) and DateTime.sunday (7)',
+        ),
+        assert(
+          (heatmapColor != null ? 1 : 0) +
+                  (customColor != null ? 1 : 0) +
+                  (customColorScale != null ? 1 : 0) <=
+              1,
+          'You can only provide one color option: heatmapColor, customColor, or customColorScale.',
         );
 
   @override
@@ -340,7 +374,9 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       cellDateTextStyle: resolvedCellDateStyle,
       startWeekday: startWeekday,
       splittedMonthView: splittedMonthView,
-      heatmapColor: heatmapColor,
+      heatmapColor: heatmapColor ?? HeatmapColor.green,
+      customColor: customColor,
+      customColorScale: customColorScale,
       onCellTap: onCellTap,
       textScaler: textScaler,
       locale: locale,
@@ -387,7 +423,9 @@ class ContributionHeatmap extends LeafRenderObjectWidget {
       ..cellDateTextStyle = resolvedCellDateStyle
       ..startWeekday = startWeekday
       ..splittedMonthView = splittedMonthView
-      ..heatmapColor = heatmapColor
+      ..heatmapColor = heatmapColor ?? HeatmapColor.green
+      ..customColor = customColor
+      ..customColorScale = customColorScale
       ..onCellTap = onCellTap
       ..textScaler = textScaler
       ..locale = locale;

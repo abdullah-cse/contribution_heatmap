@@ -42,7 +42,8 @@ class RenderContributionHeatmap extends RenderBox {
     required int startWeekday,
     required bool splittedMonthView,
     required HeatmapColor heatmapColor,
-    //Color Function(int value)? colorScale,
+    Color? customColor,
+    Color Function(int value)? customColorScale,
     void Function(DateTime date, int value)? onCellTap,
     required TextScaler textScaler,
     required Locale locale,
@@ -62,7 +63,8 @@ class RenderContributionHeatmap extends RenderBox {
         _startWeekday = startWeekday,
         _splittedMonthView = splittedMonthView,
         _heatmapColor = heatmapColor,
-        //_colorScale = colorScale,
+        _customColor = customColor,
+        _customColorScale = customColorScale,
         _onCellTap = onCellTap,
         _textScaler = textScaler,
         _locale = locale {
@@ -233,16 +235,6 @@ class RenderContributionHeatmap extends RenderBox {
     }
   }
 
-  // /// Custom color mapping function for contribution values
-  // /// If null, uses default GitHub-style green scale
-  // Color Function(int value)? _colorScale;
-  // set colorScale(Color Function(int value)? value) {
-  //   if (_colorScale != value) {
-  //     _colorScale = value;
-  //     markNeedsPaint(); // Only affects cell colors, not layout
-  //   }
-  // }
-
   /// Color scheme for the heatmap cells
   HeatmapColor _heatmapColor;
   HeatmapColor get heatmapColor => _heatmapColor;
@@ -251,6 +243,28 @@ class RenderContributionHeatmap extends RenderBox {
       _heatmapColor = value;
       _rebuildColorScale(); // Color scheme changed: recalculate color scale
       markNeedsPaint(); // Only affects cell colors, not layout
+    }
+  }
+
+  /// Optional custom color to use as the base for the heatmap palette
+  Color? _customColor;
+  Color? get customColor => _customColor;
+  set customColor(Color? value) {
+    if (_customColor != value) {
+      _customColor = value;
+      _rebuildColorScale();
+      markNeedsPaint();
+    }
+  }
+
+  /// Optional custom function to map contribution values directly to colors
+  Color Function(int value)? _customColorScale;
+  Color Function(int value)? get customColorScale => _customColorScale;
+  set customColorScale(Color Function(int value)? value) {
+    if (_customColorScale != value) {
+      _customColorScale = value;
+      _rebuildColorScale();
+      markNeedsPaint();
     }
   }
 
@@ -340,7 +354,15 @@ class RenderContributionHeatmap extends RenderBox {
 
   /// Creates/updates the dynamic color scale function.
   void _rebuildColorScale() {
-    _colorScale = HeatmapUtils.createDynamicColorScale(_entries, _heatmapColor);
+    if (_customColorScale != null) {
+      _colorScale = _customColorScale!;
+    } else {
+      _colorScale = HeatmapUtils.createDynamicColorScale(
+        _entries,
+        _heatmapColor,
+        customColor: _customColor,
+      );
+    }
   }
 
   /// Master orchestrator for date range computation.
