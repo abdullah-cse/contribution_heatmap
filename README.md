@@ -147,6 +147,7 @@ Currently, this package supports English (EN) and:
 - 🇫🇷 French (fr-FR)
 - 🇩🇪 German (de-DE)
 - 🇪🇸 Spanish (es-ES)
+- 🇷🇺 Russian (ru-RU)
 
 More languages will be added soon.
 
