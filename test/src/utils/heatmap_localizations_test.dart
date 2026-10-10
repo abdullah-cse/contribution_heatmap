@@ -122,15 +122,15 @@ void main() {
         // Russian
         expect(
           HeatmapLocalizations.monthAbbreviation(1, const Locale('ru')),
-          'Янв.',
+          'Янв',
         );
         expect(
           HeatmapLocalizations.monthAbbreviation(2, const Locale('ru')),
-          'Февр.',
+          'Февр',
         );
         expect(
           HeatmapLocalizations.monthAbbreviation(12, const Locale('ru')),
-          'Дек.',
+          'Дек',
         );
       },
     );
