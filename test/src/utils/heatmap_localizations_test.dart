@@ -49,6 +49,17 @@ void main() {
         'sáb.',
         'dom.',
       ]);
+
+      // Russian
+      expect(HeatmapLocalizations.weekdayShortNames(const Locale('ru')), [
+        'Пн',
+        'Вт',
+        'Ср',
+        'Чт',
+        'Пт',
+        'Сб',
+        'Вс',
+      ]);
     });
 
     /// Test fallback to English for unsupported locales
@@ -106,6 +117,20 @@ void main() {
         expect(
           HeatmapLocalizations.monthAbbreviation(7, const Locale('es')),
           'jul.',
+        );
+
+        // Russian
+        expect(
+          HeatmapLocalizations.monthAbbreviation(1, const Locale('ru')),
+          'Янв.',
+        );
+        expect(
+          HeatmapLocalizations.monthAbbreviation(2, const Locale('ru')),
+          'Февр.',
+        );
+        expect(
+          HeatmapLocalizations.monthAbbreviation(12, const Locale('ru')),
+          'Дек.',
         );
       },
     );

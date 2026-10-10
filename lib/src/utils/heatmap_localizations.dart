@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 /// - German
 /// - French
 /// - Spanish
+/// - Russian
 ///
 /// If a locale is not recognized, English will be used.
 ///
@@ -26,6 +27,7 @@ class HeatmapLocalizations {
     'de': ['Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'],
     'fr': ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'],
     'es': ['lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.', 'dom.'],
+    'ru': ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
   };
 
   /// Month abbreviations (January → December) per locale.
@@ -85,6 +87,20 @@ class HeatmapLocalizations {
       'oct.',
       'nov.',
       'dic.',
+    ],
+    'ru': [
+      'Янв.',
+      'Февр.',
+      'Март',
+      'Апр.',
+      'Май',
+      'Июнь',
+      'Июль',
+      'Авг.',
+      'Сент.',
+      'Окт.',
+      'Нояб.',
+      'Дек.',
     ],
   };
 
